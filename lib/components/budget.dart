@@ -1,3 +1,4 @@
+import 'package:finances/constants/button_style.dart';
 import 'package:finances/models/budget_componets.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
@@ -65,12 +66,12 @@ List<Widget> _extractBudget(){
 Widget _buttonAdd(){
   return ListTile(
     title: const Text("Nuevo presupuesto", 
-      style: TextStyle(color: Colors.blue)),
+      style: buttonTextStyle),
     onTap: (){
       Navigator.pushNamed(context, "addPresupuesto").
       then((_) => setState(() {}));
     },
-    leading: Icon(Icons.add_box_rounded),
+    leading: iconButton,
   );
 }
 
