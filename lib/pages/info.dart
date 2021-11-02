@@ -1,4 +1,5 @@
 import 'package:finances/components/budget.dart';
+import 'package:finances/components/goals.dart';
 import 'package:flutter/material.dart';
 
 class InfoPage extends StatefulWidget {
@@ -14,7 +15,10 @@ class _InfoState extends State<InfoPage> {
     return Scaffold(
       body: ListView(
         children: [
-          Budget()
+          Budget(),
+          const Divider(),
+          GoalsPage(),
+          const Divider()
         ],
       ),
     );

@@ -1,4 +1,4 @@
-import 'package:finances/models/budget_componets.dart';
+import 'package:finances/models/list/budget_list.dart';
 import 'package:finances/models/budgets.dart';
 import 'package:flutter/material.dart';
 
