@@ -13,17 +13,15 @@ class Budget extends StatefulWidget {
 
 class _BudgetState extends State<Budget> {
 
-  double maxPading = 20.0;
-
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(maxPading),
+      padding: const EdgeInsets.all(maxSize),
       child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _getTitle(),
-            SizedBox(height: maxPading,),
+            const SizedBox(height: maxSize,),
             _getBugets(),
             _buttonAdd(),
           ],
