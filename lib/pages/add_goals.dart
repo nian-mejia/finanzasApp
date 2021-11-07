@@ -40,13 +40,13 @@ class _AddGoalsPageState extends State<AddGoalsPage> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _getTextField(nameController, "Nombre", "Nombre del objetivo"),
+            _getTextField(nameController,  "Nombre del objetivo"),
             space,          
             _getTextFieldValue(valueController, "Valor"),
             space,
             _getTextFieldValue(savedController, "Ya ahorrado"),
             space,
-            _getDataPicker(dateController, "Fecha deseada", ""),
+            _getDataPicker(dateController, "Fecha deseada"),
             space,
             _getCuotas(),
           ],
@@ -102,12 +102,11 @@ class _AddGoalsPageState extends State<AddGoalsPage> {
     }
   }
 
-  TextField _getDataPicker(TextEditingController controller, String label, String hintText){
+  TextField _getDataPicker(TextEditingController controller, String label){
    return TextField(
             controller: controller,
             decoration: InputDecoration(
               labelText: label,
-              hintText:  hintText
             ),
             onTap: (){
               FocusScope.of(context).requestFocus(FocusNode());
@@ -116,12 +115,11 @@ class _AddGoalsPageState extends State<AddGoalsPage> {
             );
   }
 
-  TextField _getTextField(TextEditingController controller, String label, String hintText) {
+  TextField _getTextField(TextEditingController controller, String label,) {
     return TextField(
             controller: controller,
             decoration: InputDecoration(
               labelText: label,
-              hintText:  hintText
             ),
           );
   }
@@ -133,7 +131,6 @@ class _AddGoalsPageState extends State<AddGoalsPage> {
             decoration:   InputDecoration(
               labelText: label,
               prefixIcon: const Icon(Icons.attach_money, size: 23,),
-              hintText: "0" 
             ),
           );
   }

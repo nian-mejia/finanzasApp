@@ -34,20 +34,18 @@ class _AddPresupuestoPageState extends State<AddPresupuestoPage> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text("Nombre"),
             TextField(
               controller: nameController,
               decoration: const InputDecoration(
-                hintText:  "Nombre del presupuesto"
+                label:  Text("Nombre del presupuesto")
               ),
             ),
-            const Text("Valor"),
             TextField(
               controller: valueController,
               keyboardType: TextInputType.number,
               decoration: const InputDecoration(
                 prefixIcon: Icon(Icons.attach_money, size: 23,),
-                hintText: "0" 
+                labelText: "Valor"
               ),
             ),
             Text("Categoría"),

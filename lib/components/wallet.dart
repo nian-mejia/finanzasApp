@@ -24,8 +24,36 @@ class _WalletComponentState extends State<WalletComponent> {
       children: [
         const Text("CUENTAS", style: titleStyle),
         _getGrid(),
+        _getAddAccount(),
       ],
     ));
+  }
+
+  Widget _getAddAccount(){
+    return Padding(
+            padding: EdgeInsets.symmetric(horizontal: 3.0.w, vertical: 1.5.h),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  IconButton(
+                    icon: const Icon(
+                      Icons.add,
+                      size : 40,
+                      color: Colors.white,
+                    ),
+                    onPressed: (){
+                      Navigator.pushNamed(context, "addAccount").
+                        then((_) => setState(() {}));
+                    },
+                  ),
+                ],
+              ),
+            ),
+    );
   }
 
   SingleChildScrollView _getGrid() {
@@ -40,7 +68,7 @@ class _WalletComponentState extends State<WalletComponent> {
             shrinkWrap: true,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
-              childAspectRatio: 0.32.h,
+              childAspectRatio: 1.5.h / 5,
               mainAxisSpacing: 2.w,
               crossAxisSpacing: 20.0,
             ),
