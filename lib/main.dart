@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Material App',
         theme: ThemeData.dark(),
-        initialRoute: "info",
+        initialRoute: "login",
         routes: routes,
         localizationsDelegates: const [ // Add this line
           GlobalMaterialLocalizations.delegate,

@@ -65,7 +65,7 @@ class _InfoState extends State<InfoPage> {
       preferredSize: const Size.fromHeight(75.0),
       child:  Material(
         color: colorApp,
-        elevation: 12,
+        elevation: 20 ,
         child: Container(
         child: _getTitleAppBar(),
         ),
