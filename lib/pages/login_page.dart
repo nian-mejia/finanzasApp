@@ -1,5 +1,6 @@
+import 'package:finances/pages/info.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sizer/sizer.dart';
 
 class LoginPage extends StatelessWidget {
@@ -15,13 +16,13 @@ class LoginPage extends StatelessWidget {
           Positioned(
             top: 28.h,
             child:  
-            Image.asset("images/charco.png", height: 20.h,
-            color: Colors.blue)
+            Image.asset("images/charco.png", height: 18.h, width: 80.w,
+            color: Colors.lightBlue)
           ),
           Positioned(
-            top: 10.h,
+            top: 11.h,
             child:  
-            Image.asset("images/marranito.png", height: 30.h,)
+            Image.asset("images/marranito.png", height: 28.h,)
           ),
           Positioned(
             top: 45.h,
@@ -31,25 +32,29 @@ class LoginPage extends StatelessWidget {
           Positioned(
             top: 50.h,
             child:
-          _googleLogin()
+          _googleLogin(context)  
           ),
           Positioned(
-            top:  62.h,
+            top:  58.h,
             child:
-            _saveInDevice()
+            _saveInDevice(context)
           ),
         ],
       ),
     );
   }
 
-  ElevatedButton _saveInDevice() {
+  ElevatedButton _saveInDevice(BuildContext context) {
     return ElevatedButton(
           style: ElevatedButton.styleFrom(
+              onSurface: Colors.white,
               primary: Colors.blue.shade400,
               padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
           ),
-          onPressed: (){}, 
+          onPressed: (){
+             Navigator.push(context,  
+                  MaterialPageRoute(builder: (context) => InfoPage(null)),);
+          }, 
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: const [
@@ -61,21 +66,31 @@ class LoginPage extends StatelessWidget {
         );
   }
 
-  ElevatedButton _googleLogin() {
+  ElevatedButton _googleLogin(BuildContext context) {
     return ElevatedButton(
           style: ElevatedButton.styleFrom(
-              onPrimary: Colors.red,
-              primary: Colors.white,
+              onSurface: Colors.white,
+              primary: Colors.red,
               padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
           ),
-          onPressed: (){}, 
+          onPressed: () async{
+            try {
+                final googleUser = await GoogleSignIn().signIn();
+                Navigator.push(context,  
+                  MaterialPageRoute(builder: (context) => InfoPage(googleUser)),);
+            } catch (error) {
+              print(error);
+              return;
+            }
+
+          },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Image.asset("images/google.png", height: 4.h,),
+              Image.asset("images/google.png", height: 2.5.h, color: Colors.white),
               SizedBox(width: 20),
               const Text("Sign in with Google",
-               style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),),
+               style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
             ],
           )
         );

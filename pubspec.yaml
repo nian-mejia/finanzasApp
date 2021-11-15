@@ -38,6 +38,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   percent_indicator: ^3.4.0
   sizer: ^2.0.15
+  google_sign_in: ^5.2.1
 
 dev_dependencies:
   flutter_test:

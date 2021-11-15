@@ -9,7 +9,7 @@ Map<String, WidgetBuilder> routes  = {
   "addPresupuesto" : (context) => AddPresupuestoPage(),
   "addGoals" : (context) => AddGoalsPage(),
   "addAccount" : (context) => AddAccountPage(),
-  "info" : (context) => InfoPage(),
+  "info" : (context) => InfoPage(null),
   "login": (context) => LoginPage(),
 };
 

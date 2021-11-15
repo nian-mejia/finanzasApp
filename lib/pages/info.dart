@@ -1,13 +1,15 @@
+import 'package:finances/components/appbar.dart';
 import 'package:finances/components/budget.dart';
 import 'package:finances/components/goals.dart';
 import 'package:finances/components/wallet.dart';
-import 'package:finances/constants/button_style.dart';
 import 'package:finances/constants/titles.dart';
 import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class InfoPage extends StatefulWidget {
-  const InfoPage({Key? key}) : super(key: key);
+  GoogleSignInAccount? googleUser;
+
+  InfoPage(GoogleSignInAccount? this.googleUser, {Key? key}) : super(key: key);
 
   @override
   _InfoState createState() => _InfoState();
@@ -21,9 +23,10 @@ class _InfoState extends State<InfoPage> {
   Widget build(BuildContext context) {
 
     List<Widget> _listViews = [_getBodyHome(), _getBodyInfo()];
+    final user = widget.googleUser;
 
     return Scaffold(
-      appBar: _getAppBar(context),
+      appBar: AppbarPing(currentIndex, user).GetAppBar(),
       body: _listViews[currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: Colors.amber,
@@ -53,62 +56,24 @@ class _InfoState extends State<InfoPage> {
         FloatingActionButton(
           backgroundColor: ColorSelectAndButton,
           child: const Icon(Icons.add),
-          onPressed: ()=>print("click floating")) : null,
+          onPressed: ()=> print("click floating")) : null,
     );
   }
-
-  _getAppBar(BuildContext context) {
-
-    final appBar =  AppBar(title: const Text(title), backgroundColor: colorApp,);
-
-    return currentIndex == 0 ? PreferredSize(
-      preferredSize: const Size.fromHeight(75.0),
-      child:  Material(
-        color: colorApp,
-        elevation: 20 ,
-        child: Container(
-        child: _getTitleAppBar(),
-        ),
-    ),): appBar;
   }
 
-  Column _getTitleAppBar() {
-    return Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          const Text(title, style: titleStyleBig,),
-          Expanded(
-            flex: 0,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start    ,
-              children: [
-                SizedBox(width: 6.w,),
-                const Icon(Icons.savings, size: 35,),
-                SizedBox(width: 3.w,),
-                const Text("Saldo \$"),
-                Text("122.000")
-              ],
-            ),
-          )
-        ],
-      );
+  Widget _getBodyHome(){
+    return Center(child: Text("Home"),);
   }
-}
 
-Widget _getBodyHome(){
-  return Center(child: Text("Home"),);
-}
-
-Widget _getBodyInfo(){
-
-  return ListView(
-          children: [
-          WalletComponent(),
-          const Divider(),
-          Budget(),
-          const Divider(),
-          GoalsPage(),
-          const Divider()
-        ],
-      );
-}
+  Widget _getBodyInfo(){
+    return ListView(
+            children: [
+            WalletComponent(),
+            const Divider(),
+            Budget(),
+            const Divider(),
+            GoalsPage(),
+            const Divider()
+          ],
+        );
+  }
