@@ -1,12 +1,13 @@
 import 'package:finances/constants/button_style.dart';
 import 'package:finances/constants/titles.dart';
+import 'package:finances/models/user.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sizer/sizer.dart';
 
 class AppbarPing extends StatelessWidget {
   int currentIndex;
-  GoogleSignInAccount? user;
+  User? user;
 
   AppbarPing(this.currentIndex, this.user, {Key? key}) : super(key: key);
 
@@ -42,7 +43,7 @@ class AppbarPing extends StatelessWidget {
                 CircleAvatar(
                   child:
                     ClipOval(
-                  child:  user != null ? Image.network(user!.photoUrl!)
+                  child:  user != null ? Image.network(user!.url!)
                      : Image.network("http://cdn.onlinewebfonts.com/svg/img_184513.png",
                       color: Colors.amber,)
                 ))

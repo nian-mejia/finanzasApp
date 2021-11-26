@@ -3,13 +3,14 @@ import 'package:finances/components/budget.dart';
 import 'package:finances/components/goals.dart';
 import 'package:finances/components/wallet.dart';
 import 'package:finances/constants/titles.dart';
+import 'package:finances/models/user.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class InfoPage extends StatefulWidget {
-  GoogleSignInAccount? googleUser;
+  User? googleUser;
 
-  InfoPage(GoogleSignInAccount? this.googleUser, {Key? key}) : super(key: key);
+  InfoPage(User? this.googleUser, {Key? key}) : super(key: key);
 
   @override
   _InfoState createState() => _InfoState();
@@ -62,7 +63,7 @@ class _InfoState extends State<InfoPage> {
   }
 
   Widget _getBodyHome(){
-    return Center(child: Text("Home"),);
+    return const Center(child: Text("Home"),);
   }
 
   Widget _getBodyInfo(){

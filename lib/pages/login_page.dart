@@ -1,4 +1,6 @@
+import 'package:finances/models/user.dart';
 import 'package:finances/pages/info.dart';
+import 'package:finances/provider/database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sizer/sizer.dart';
@@ -8,6 +10,9 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    DBProvider.db.database;
+
     return Scaffold(
       body: Stack(
         alignment: Alignment.center,
@@ -49,7 +54,7 @@ class LoginPage extends StatelessWidget {
           style: ElevatedButton.styleFrom(
               onSurface: Colors.white,
               primary: Colors.blue.shade400,
-              padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
           ),
           onPressed: (){
              Navigator.push(context,  
@@ -71,15 +76,18 @@ class LoginPage extends StatelessWidget {
           style: ElevatedButton.styleFrom(
               onSurface: Colors.white,
               primary: Colors.red,
-              padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
           ),
           onPressed: () async{
             try {
                 final googleUser = await GoogleSignIn().signIn();
+                User user = User(googleUser);
+                if (user.email != null){
+                  DBProvider.db.database.then((db) => db.insert("users", user.toJson()));
+                }
                 Navigator.push(context,  
-                  MaterialPageRoute(builder: (context) => InfoPage(googleUser)),);
+                  MaterialPageRoute(builder: (context) => InfoPage(user)),);
             } catch (error) {
-              print(error);
               return;
             }
 
@@ -88,7 +96,7 @@ class LoginPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Image.asset("images/google.png", height: 2.5.h, color: Colors.white),
-              SizedBox(width: 20),
+              const SizedBox(width: 20),
               const Text("Sign in with Google",
                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
             ],
