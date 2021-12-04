@@ -12,7 +12,7 @@ Map<String, WidgetBuilder> routes  = {
   "addGoals" : (context) => AddGoalsPage(),
   "addAccount" : (context) => AddAccountPage(),
   "info" : (context) => InfoPage(null),
-  "login": (context) => LoginPage(),
+  "login": (context) => const LoginPage(),
   "loading": (context) => LoadingPage(),
 };
 

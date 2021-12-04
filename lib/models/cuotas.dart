@@ -8,7 +8,6 @@ enum cuotas {
 }
 
 cuotas getCuotaByString(String? cuota){
-
   if (cuota == cuotas.Semanal.toString()){
     return cuotas.Semanal;
   }else if (cuota == cuotas.Mensual.toString()){

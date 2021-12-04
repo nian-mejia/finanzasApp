@@ -2,7 +2,7 @@ import 'package:finances/pages/loading.dart';
 import 'package:finances/pages/login_page.dart';
 import 'package:finances/provider/config.dart';
 import 'package:finances/routes/routes.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart'; 
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:sizer/sizer.dart';
 

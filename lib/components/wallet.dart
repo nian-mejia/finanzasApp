@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:finances/constants/button_style.dart';
+import 'package:finances/models/accounts.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
@@ -63,7 +64,23 @@ class _WalletComponentState extends State<WalletComponent> {
       children: <Widget>[
         Container(
           padding: EdgeInsets.symmetric(horizontal: 3.0.w, vertical: 1.5.h),
-          child: GridView.builder(
+          child: FutureBuilder(
+            builder: (context, snapshot) {
+              if (snapshot.hasError || snapshot.data == null){
+                return Column();
+              }
+              List<Widget> accounts = [];
+              for (var item in snapshot.data as List<Account>) {
+                accounts.add(createConteiner(item));
+              }
+              return GridView.count(
+                crossAxisCount: 2,
+                children: accounts
+                );
+            },
+            future: getAccounts(),)
+          
+          /*GridView.builder(
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -97,9 +114,34 @@ class _WalletComponentState extends State<WalletComponent> {
                   ),
               );
             },
-          ),
+          ),*/
         ),
       ],
     ));
   }
+}
+
+Container createConteiner(Account account){
+  final color = Colors.primaries[Random().nextInt(12)];
+  final titleStyleColorBlue = TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: color.shade50);
+
+  return 
+    Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: color,
+      ),
+      child:  Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children:  [
+              const Icon(
+              Icons.payment_rounded,
+              size : 25,
+              color: Colors.white,
+            ),
+            Text(account.name, style: titleStyleColorBlue,),
+            Text("\$ "+account.value, style: titleStyleColorBlue,),
+          ],
+        ),
+    );
 }

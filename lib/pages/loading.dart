@@ -12,8 +12,6 @@ class _LoadingPageState extends State<LoadingPage> {
 
   @override
   Widget build(BuildContext context) {
-
-    print("object");
     return const Scaffold(
       backgroundColor: colorApp,
       body: Center(

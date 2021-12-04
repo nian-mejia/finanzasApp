@@ -38,7 +38,7 @@ class DBProvider {
 
         await db.execute('CREATE TABLE users (id INTEGER, name TEXT, email TEXT, url TEXT);');
 
-        await db.execute('CREATE TABLE accounts (id INTEGER PRIMARY KEY, name TEXT, value INTEGER, icon TEXT, color TEXT);');
+        await db.execute('CREATE TABLE accounts (id INTEGER PRIMARY KEY, name TEXT, value TEXT, icon TEXT, color TEXT);');
       }
     );
   }
