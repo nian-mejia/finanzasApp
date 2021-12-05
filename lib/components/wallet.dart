@@ -31,117 +31,78 @@ class _WalletComponentState extends State<WalletComponent> {
   }
 
   Widget _getAddAccount(){
-    return Padding(
-            padding: EdgeInsets.symmetric(horizontal: 3.0.w, vertical: 1.5.h),
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
+    return 
+    Padding(
+        padding: EdgeInsets.symmetric(horizontal: 3.0.w, vertical: 1.5.h),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              IconButton(
+                icon: const Icon(
+                  Icons.add,
+                  size : 40,
+                  color: Colors.white,
+                ),
+                onPressed: (){
+                  Navigator.pushNamed(context, "addAccount").
+                    then((_) => setState(() {}));
+                },
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  IconButton(
-                    icon: const Icon(
-                      Icons.add,
-                      size : 40,
-                      color: Colors.white,
-                    ),
-                    onPressed: (){
-                      Navigator.pushNamed(context, "addAccount").
-                        then((_) => setState(() {}));
-                    },
-                  ),
-                ],
-              ),
-            ),
+            ],
+          ),
+        ),
     );
   }
 
-  SingleChildScrollView _getGrid() {
-    
-    return SingleChildScrollView(
-    child: Column(
-      children: <Widget>[
-        Container(
-          padding: EdgeInsets.symmetric(horizontal: 3.0.w, vertical: 1.5.h),
-          child: FutureBuilder(
+  Widget _getGrid() {
+    List<Widget> accounts = [];
+    return  FutureBuilder(
             builder: (context, snapshot) {
-              if (snapshot.hasError || snapshot.data == null){
-                return Column();
-              }
-              List<Widget> accounts = [];
-              for (var item in snapshot.data as List<Account>) {
+              final data  =  snapshot.data as List;
+              if (snapshot.hasError || data.length == 0){
+                  return SizedBox(height: 1.h, width: 100.w,);
+                }
+              for (var item in data as List<Account>) {
                 accounts.add(createConteiner(item));
               }
               return GridView.count(
+                shrinkWrap: true, // use this
                 crossAxisCount: 2,
-                children: accounts
+                children: accounts,
+                crossAxisSpacing: 1,
                 );
+              
             },
-            future: getAccounts(),)
-          
-          /*GridView.builder(
-            physics: const NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              childAspectRatio: 1.5.h / 5,
-              mainAxisSpacing: 2.w,
-              crossAxisSpacing: 20.0,
-            ),
-            itemCount: 6,
-            itemBuilder: (context, index) {
-
-              final color = Colors.primaries[Random().nextInt(12)];
-              final titleStyleColorBlue = TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: color.shade50);
-
-              return Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: color,
-                ),
-                child:  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children:  [
-                       const Icon(
-                        Icons.payment_rounded,
-                        size : 25,
-                        color: Colors.white,
-                      ),
-                      Text("Efectivo", style: titleStyleColorBlue,),
-                      Text("\$ 1000", style: titleStyleColorBlue,),
-                    ],
-                  ),
-              );
-            },
-          ),*/
-        ),
-      ],
-    ));
+            future: getAccounts(),
+            initialData: accounts,
+     );
   }
-}
 
-Container createConteiner(Account account){
-  final color = Colors.primaries[Random().nextInt(12)];
-  final titleStyleColorBlue = TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: color.shade50);
-
-  return 
-    Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: color,
-      ),
-      child:  Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children:  [
-              const Icon(
-              Icons.payment_rounded,
-              size : 25,
-              color: Colors.white,
-            ),
-            Text(account.name, style: titleStyleColorBlue,),
-            Text("\$ "+account.value, style: titleStyleColorBlue,),
-          ],
+  Container createConteiner(Account account){
+    final color = Colors.primaries[Random().nextInt(12)];
+    final titleStyleColorBlue = TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: color.shade50);
+    return 
+      Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: color,
         ),
-    );
+        child:  Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children:  [
+                const Icon(
+                Icons.payment_rounded,
+                size : 25,
+                color: Colors.white,
+              ),
+              Text(account.name, style: titleStyleColorBlue,),
+              Text("\$ "+account.value, style: titleStyleColorBlue,),
+            ],
+          ),
+      );
+}
 }

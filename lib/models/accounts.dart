@@ -7,17 +7,27 @@ class Account{
   int id;
   String name;
   String value;
-  String color;
 
-  Account(this.id, this.name, this.value, this.color); 
+  Account._(this.id, this.name, this.value); 
+
+  factory Account(String name, String value){
+    return Account._(0, name, value);
+  }
+  Map<String, dynamic> toJson() {
+
+    Map<String, dynamic> map = {
+      "name" : name,
+      "value": value,
+    };
+    return map;
+  } 
 }
 
 Account accountfromJSon(Map<String, Object?> json){
     int id = json["id"] as int;
     String name = json["name"] as String;
     String value = json["value"] as String;
-    String color = json["color"] as String;
-    return Account(id, name, value, color);
+    return Account._(id, name, value);
   }
 
 Future<List<Account>> getAccounts() async{

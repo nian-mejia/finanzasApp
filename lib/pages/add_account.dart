@@ -1,5 +1,7 @@
 
+import 'package:finances/models/accounts.dart';
 import 'package:finances/models/cuotas.dart';
+import 'package:finances/provider/database.dart';
 import 'package:flutter/material.dart';
 
 class AddAccountPage extends StatefulWidget {
@@ -13,8 +15,6 @@ class _AddAccountPageState extends State<AddAccountPage> {
 
   final nameController = TextEditingController();
   final valueController = TextEditingController();
-  final savedController = TextEditingController();
-  final dateController =  TextEditingController();
 
   final space = const SizedBox(height: 15);
   cuotas defaultCouta = cuotas.Mensual;
@@ -71,11 +71,13 @@ class _AddAccountPageState extends State<AddAccountPage> {
   }
 
   _saveAccount(){
-    double value = 0;
+    String value = "0";
 
     if (valueController.text.isNotEmpty){
-      value = double.parse(valueController.text);
+      value = valueController.text.toString();
     }
 
+    Account account = Account(nameController.text, value);
+    DBProvider.db.database.then((db) => db.insert("accounts", account.toJson()));
   }
 }
