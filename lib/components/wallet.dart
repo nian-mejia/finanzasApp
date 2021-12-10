@@ -69,12 +69,16 @@ class _WalletComponentState extends State<WalletComponent> {
               for (var item in data as List<Account>) {
                 accounts.add(createConteiner(item));
               }
-              return GridView.count(
-                shrinkWrap: true, // use this
-                crossAxisCount: 2,
-                children: accounts,
-                crossAxisSpacing: 1,
-                );
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: GridView.count(
+                  shrinkWrap: true, // use this
+                  crossAxisSpacing: 5.w,
+                  crossAxisCount: 2,
+                  childAspectRatio: (50.w /  10.h),
+                  children: accounts,
+                  ),
+              );
               
             },
             future: getAccounts(),
