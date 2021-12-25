@@ -47,12 +47,9 @@ class _WalletComponentState extends State<WalletComponent> {
                   size : 40,
                   color: Colors.white,
                 ),
-                onPressed: (){
-                  Navigator.pushNamed(context, "addAccount").
-                  then((_) => setState(() {
-                    getAccounts();
-                  }));
-                  }
+                onPressed: () {
+                  Navigator.popAndPushNamed(context, 'addAccount');
+                }
               ),
             ],
           ),

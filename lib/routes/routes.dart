@@ -1,4 +1,4 @@
-
+import 'package:finances/models/user.dart';
 import 'package:finances/pages/add_account.dart';
 import 'package:finances/pages/add_goals.dart';
 import 'package:finances/pages/add_badget.dart';
@@ -11,7 +11,7 @@ Map<String, WidgetBuilder> routes  = {
   "addPresupuesto" : (context) => AddPresupuestoPage(),
   "addGoals" : (context) => AddGoalsPage(),
   "addAccount" : (context) => AddAccountPage(),
-  "info" : (context) => InfoPage(null),
+  "info" : (context) => InfoPage(userGlobal),
   "login": (context) => const LoginPage(),
   "loading": (context) => LoadingPage(),
 };

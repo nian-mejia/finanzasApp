@@ -1,6 +1,8 @@
 
 import 'package:finances/models/accounts.dart';
 import 'package:finances/models/cuotas.dart';
+import 'package:finances/models/user.dart';
+import 'package:finances/pages/info.dart';
 import 'package:finances/provider/database.dart';
 import 'package:flutter/material.dart';
 
@@ -15,6 +17,7 @@ class _AddAccountPageState extends State<AddAccountPage> {
 
   final nameController = TextEditingController();
   final valueController = TextEditingController();
+  bool isVisible = true;
 
   final space = const SizedBox(height: 15);
   cuotas defaultCouta = cuotas.Mensual;
@@ -28,7 +31,6 @@ class _AddAccountPageState extends State<AddAccountPage> {
           TextButton(onPressed: 
             (){
               _saveAccount();
-              Navigator.pop(context);
             }, child: const Text("Guardar")),
         ],
       ),
@@ -42,13 +44,27 @@ class _AddAccountPageState extends State<AddAccountPage> {
             space,          
             _getTextFieldValue(valueController, "Saldo inicial"),
             space,
-            //TODO: excluirSaldo
+            _excludeField()
           ],
         ),
       ),
     );
   }
 
+  Widget _excludeField(){
+    return Row(
+      children: [
+        const Text("Incluir en el saldo total", style: 
+          TextStyle(fontWeight: FontWeight.bold),),
+        Switch(value: isVisible,
+            onChanged: (value) {
+              setState(() {
+                isVisible = value;
+              });
+            },),
+      ],
+    );
+  }
   
   TextField _getTextField(TextEditingController controller, String label) {
     return TextField(
@@ -73,6 +89,7 @@ class _AddAccountPageState extends State<AddAccountPage> {
   _saveAccount(){
     String value = "0";
     String name  = "Account";
+    int visible = 1;
 
     if (valueController.text.isNotEmpty){
       value = valueController.text.toString();
@@ -82,8 +99,14 @@ class _AddAccountPageState extends State<AddAccountPage> {
       name = nameController.text;
     }
 
-    Account account = Account(name, value);
+    if (isVisible == true){
+      visible = 1;
+    }else{
+      visible = 0;
+    }
+
+    Account account = Account(name, value, visible);
     DBProvider.db.database.then((db) => db.insert("accounts", account.toJson()));
-    Navigator.pop(context);
-  }
+    Navigator.popAndPushNamed(context, "info");
+    }
 }

@@ -8,5 +8,6 @@ Future<Widget> getConfigInicialized() async{
     if (user.name == ""){
       return const LoginPage();
     }
+  userGlobal = user;
   return InfoPage(user); 
 }

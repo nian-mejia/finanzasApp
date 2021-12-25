@@ -3,6 +3,8 @@ import 'package:finances/provider/database.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sqflite/sqflite.dart';
 
+User? userGlobal;
+
 class User {
   String? name;
   String? email;
@@ -39,7 +41,7 @@ class User {
 Future<User> getUser() async{
   User user = User(null);
   Database db = await  DBProvider.db.database;
-  List<Map<String, Object?>> users =  await db.query("users", where: "id = 1", whereArgs: [1]);
+  List<Map<String, Object?>> users =  await db.query("users", where: "id = 1");
   return users.isNotEmpty ? user.fromJSon(users.last) : user;
 }
 

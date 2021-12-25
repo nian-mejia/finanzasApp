@@ -4,30 +4,31 @@ import 'package:finances/provider/database.dart';
 import 'package:sqflite/sqflite.dart';
 
 class Account{
-  int id;
   String name;
   String value;
+  int visible;
 
-  Account._(this.id, this.name, this.value); 
+  Account._(this.name, this.value, this.visible); 
 
-  factory Account(String name, String value){
-    return Account._(0, name, value);
+  factory Account(String name, String value, int visible){
+    return Account._(name, value, visible);
   }
-  Map<String, dynamic> toJson() {
 
+  Map<String, dynamic> toJson() {
     Map<String, dynamic> map = {
       "name" : name,
       "value": value,
+      "visible": visible
     };
     return map;
   } 
 }
 
 Account accountfromJSon(Map<String, Object?> json){
-    int id = json["id"] as int;
     String name = json["name"] as String;
     String value = json["value"] as String;
-    return Account._(id, name, value);
+    int visible = json["visible"] as int;
+    return Account._(name, value, visible);
   }
 
 Future<List<Account>> getAccounts() async{

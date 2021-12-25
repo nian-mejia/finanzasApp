@@ -61,7 +61,7 @@ class LoginPage extends StatelessWidget {
             user.name = "in device";    
             user.url = "http://cdn.onlinewebfonts.com/svg/img_184513.png";     
             DBProvider.db.database.then((db) => db.insert("users", user.toJson()));
-        
+            userGlobal = user;
             Navigator.push(context,  
                   MaterialPageRoute(builder: (context) => InfoPage(user)),);
           }, 
@@ -90,6 +90,7 @@ class LoginPage extends StatelessWidget {
                 if (user.email != null){
                   DBProvider.db.database.then((db) => db.insert("users", user.toJson()));
                 }
+                userGlobal =  user;
                 Navigator.push(context,  
                   MaterialPageRoute(builder: (context) => InfoPage(user)),);
             } catch (error) {

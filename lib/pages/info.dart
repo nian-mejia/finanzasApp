@@ -5,7 +5,6 @@ import 'package:finances/components/wallet.dart';
 import 'package:finances/constants/titles.dart';
 import 'package:finances/models/user.dart';
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 class InfoPage extends StatefulWidget {
   User? googleUser;
@@ -17,12 +16,9 @@ class InfoPage extends StatefulWidget {
 }
 
 class _InfoState extends State<InfoPage> {
-
   var currentIndex = 0;
-
   @override
   Widget build(BuildContext context) {
-
     List<Widget> _listViews = [_getBodyHome(), _getBodyInfo()];
     final user = widget.googleUser;
 
