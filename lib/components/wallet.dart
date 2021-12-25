@@ -71,6 +71,7 @@ class _WalletComponentState extends State<WalletComponent> {
               return Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: GridView.count(
+                  primary: false,
                   shrinkWrap: true, // use this
                   crossAxisSpacing: 5.w,
                   crossAxisCount: 2,
