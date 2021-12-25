@@ -57,8 +57,13 @@ class LoginPage extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
           ),
           onPressed: (){
-             Navigator.push(context,  
-                  MaterialPageRoute(builder: (context) => InfoPage(null)),);
+            User user = User(null);      
+            user.name = "in device";    
+            user.url = "http://cdn.onlinewebfonts.com/svg/img_184513.png";     
+            DBProvider.db.database.then((db) => db.insert("users", user.toJson()));
+        
+            Navigator.push(context,  
+                  MaterialPageRoute(builder: (context) => InfoPage(user)),);
           }, 
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,

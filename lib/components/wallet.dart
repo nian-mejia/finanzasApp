@@ -49,8 +49,10 @@ class _WalletComponentState extends State<WalletComponent> {
                 ),
                 onPressed: (){
                   Navigator.pushNamed(context, "addAccount").
-                    then((_) => setState(() {}));
-                },
+                  then((_) => setState(() {
+                    getAccounts();
+                  }));
+                  }
               ),
             ],
           ),
@@ -75,6 +77,7 @@ class _WalletComponentState extends State<WalletComponent> {
                   shrinkWrap: true, // use this
                   crossAxisSpacing: 5.w,
                   crossAxisCount: 2,
+                  mainAxisSpacing: 1.h,
                   childAspectRatio: (50.w /  10.h),
                   children: accounts,
                   ),

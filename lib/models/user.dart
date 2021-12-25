@@ -42,3 +42,4 @@ Future<User> getUser() async{
   List<Map<String, Object?>> users =  await db.query("users", where: "id = 1", whereArgs: [1]);
   return users.isNotEmpty ? user.fromJSon(users.last) : user;
 }
+

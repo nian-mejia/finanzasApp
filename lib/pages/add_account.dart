@@ -72,12 +72,18 @@ class _AddAccountPageState extends State<AddAccountPage> {
 
   _saveAccount(){
     String value = "0";
+    String name  = "Account";
 
     if (valueController.text.isNotEmpty){
       value = valueController.text.toString();
     }
 
-    Account account = Account(nameController.text, value);
+    if (nameController.text.isNotEmpty){
+      name = nameController.text;
+    }
+
+    Account account = Account(name, value);
     DBProvider.db.database.then((db) => db.insert("accounts", account.toJson()));
+    Navigator.pop(context);
   }
 }
