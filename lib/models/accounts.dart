@@ -40,3 +40,17 @@ Future<List<Account>> getAccounts() async{
   }
   return responseAccounts;
 }
+
+Future<double> getTotal() async{
+  double total = 0;
+  List<Account> responseAccounts = [];
+  Database db = await  DBProvider.db.database;
+  List<Map<String, Object?>> accounts =  await db.query("accounts", where: "visible = 1");
+  for (var element in accounts) {
+    responseAccounts.add(accountfromJSon(element));
+  }
+  for (var element in responseAccounts){
+    total += double.parse(element.value);
+  }
+  return total;
+}

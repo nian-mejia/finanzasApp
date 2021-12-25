@@ -87,16 +87,15 @@ class LoginPage extends StatelessWidget {
             try {
                 final googleUser = await GoogleSignIn().signIn();
                 User user = User(googleUser);
-                if (user.email != null){
+                if (user.email!.isNotEmpty){
                   DBProvider.db.database.then((db) => db.insert("users", user.toJson()));
                 }
                 userGlobal =  user;
                 Navigator.push(context,  
                   MaterialPageRoute(builder: (context) => InfoPage(user)),);
             } catch (error) {
-              return;
+              Navigator.popAndPushNamed(context, "login");
             }
-
           },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,

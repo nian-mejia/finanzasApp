@@ -1,5 +1,6 @@
 import 'package:finances/constants/button_style.dart';
 import 'package:finances/constants/titles.dart';
+import 'package:finances/models/accounts.dart';
 import 'package:finances/models/user.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
@@ -53,14 +54,22 @@ class AppbarPing extends StatelessWidget {
     );
   }
 
-  Row _getIconAndBalance() {
-    return Row(
+  Widget _getIconAndBalance() {
+    return  Row(
             children: [
               const Icon(Icons.savings, size: 35,),
               SizedBox(width: 3.w,),
-              const Text("Saldo \$"),
-              Text("122.000")
-            ],
-          );
+              FutureBuilder(
+                //initialData: const Text("Saldo \$ 0"),
+                future: getTotal(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasError){
+                    return const Text("Saldo \$ 0");
+                  }
+                  return Text("Saldo \$ ${snapshot.data}");
+                }),
+            ]
+        );
+
   }
 }
