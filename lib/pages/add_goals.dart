@@ -1,7 +1,9 @@
 import 'package:finances/constants/button_style.dart';
-import 'package:finances/models/carts.dart';
+import 'package:finances/models/accounts.dart';
+import 'package:finances/models/goals.dart';
 import 'package:finances/models/cuotas.dart';
 import 'package:finances/models/list/goal_list.dart';
+import 'package:finances/provider/database.dart';
 import 'package:flutter/material.dart';
 
 class AddGoalsPage extends StatefulWidget {
@@ -30,7 +32,6 @@ class _AddGoalsPageState extends State<AddGoalsPage> {
           TextButton(onPressed: 
             (){
               _saveGoal();
-              Navigator.pop(context);
             }, child: const Text("Guardar")),
         ],
       ),
@@ -136,18 +137,29 @@ class _AddGoalsPageState extends State<AddGoalsPage> {
   }
 
   _saveGoal(){
-    double value = 0;
-    double saved = 0;
+    double totalValue = 0;
+    double savedMoney = 0;
+    String name = "";
 
     if (valueController.text.isNotEmpty){
-      value = double.parse(valueController.text);
+      totalValue = double.parse(valueController.text);
     }
     if (savedController.text.isNotEmpty){
-      saved = double.parse(savedController.text);
+      savedMoney = double.parse(savedController.text);
     }
 
-    final newGoal = Cards(nameController.text, dateController.text, 
-                value, saved, defaultCouta);
+    if (nameController.text.isNotEmpty){
+      name = nameController.text.toString();
+    }
+
+    final newGoal = Goal(name, dateController.text, 
+                totalValue, savedMoney, defaultCouta, true);
+
+    final newAccount = Account(name, savedMoney.toString(), 2);
+    DBProvider.db.database.then((db) => db.insert("accounts", newAccount.toJson()));
+    DBProvider.db.database.then((db) => db.insert("goals", newGoal.toJson()));
+
     cardList.add(newGoal);
+    Navigator.pop(context);
   }
 }

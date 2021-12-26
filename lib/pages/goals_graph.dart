@@ -1,12 +1,13 @@
 import 'package:finances/constants/button_style.dart';
-import 'package:finances/models/carts.dart';
+import 'package:finances/models/cuotas.dart';
+import 'package:finances/models/goals.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class GoalsGraph extends StatefulWidget {
 
-  Cards? card;
+  Goal? card;
 
   GoalsGraph({Key? key, @required this.card}) : super(key: key);
 
@@ -39,7 +40,7 @@ class _GoalsGraphState extends State<GoalsGraph> {
     );
   }
 
-  Widget _getInfoAboutDate(Cards card){
+  Widget _getInfoAboutDate(Goal card){
 
     final today = DateTime.now();
     final endDate = DateFormat('yyyy-MM-dd').parse(card.endDate);
@@ -51,7 +52,7 @@ class _GoalsGraphState extends State<GoalsGraph> {
       padding: const EdgeInsets.all(10.0),
       child: Column(
         children: [
-          Text("Cantidad mínima ${getCardName(card)} para llegar a la meta"),
+          Text("Cantidad mínima ${getCuotaName(card)} para llegar a la meta"),
           Text("COP ${accountMin.toStringAsFixed(0)}", style: titleStyleBigColorBlue,),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -69,7 +70,7 @@ class _GoalsGraphState extends State<GoalsGraph> {
     );
   }
 
-  Widget _getGraph(Cards card){
+  Widget _getGraph(Goal card){
     return CircularPercentIndicator(
                 radius: 200.0,
                 lineWidth: 16.0,
@@ -95,16 +96,19 @@ class _GoalsGraphState extends State<GoalsGraph> {
               );
   }
 
-  Row _getHeader(Cards cards){
+  Row _getHeader(Goal cards){
     return Row(
       children: [
-        CircleAvatar(backgroundImage: cards.imagen, radius: 34,),
+        const CircleAvatar(
+          backgroundImage: 
+          NetworkImage("https://thumbs.dreamstime.com/b/goals-icon-vector-red-target-arrow-achievement-concept-illustration-148419541.jpg"),
+          radius: 34,),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(cards.titulo, style: titleStyleBig,),
+              Text(cards.title, style: titleStyleBig,),
               Text("Fecha limite ${cards.endDate}")
             ],
           ),

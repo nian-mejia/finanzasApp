@@ -1,4 +1,6 @@
 
+import 'package:finances/models/goals.dart';
+
 enum cuotas {
   Mensual,
   Semanal,
@@ -18,5 +20,39 @@ cuotas getCuotaByString(String? cuota){
     return cuotas.Trimestral;
   }else{
     return cuotas.Semestral;
+  }
+}
+
+int getNumber(Goal card){
+  switch (card.cuota) {
+    case cuotas.Anual:
+      return 365;
+    case cuotas.Semestral:
+      return 181;
+    case cuotas.Trimestral:
+      return 90;
+    case cuotas.Mensual:
+      return 30;
+    case cuotas.Semanal:
+      return 7;
+    default:
+      return -1;
+  }
+}
+
+String getCuotaName(Goal card){
+  switch (card.cuota) {
+    case cuotas.Anual:
+      return "anual";
+    case cuotas.Semestral:
+      return "semanal";
+    case cuotas.Trimestral:
+      return "trimestral";
+    case cuotas.Mensual:
+      return "mensual";
+    case cuotas.Semanal:
+      return "semanal";
+    default:
+      return "";
   }
 }

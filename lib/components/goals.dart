@@ -1,5 +1,5 @@
 import 'package:finances/constants/button_style.dart';
-import 'package:finances/models/carts.dart';
+import 'package:finances/models/goals.dart';
 import 'package:finances/models/list/goal_list.dart';
 import 'package:finances/pages/goals_graph.dart';
 import 'package:flutter/material.dart';
@@ -57,7 +57,7 @@ class _GoalsPageState extends State<GoalsPage> {
     return response;
   }
 
-  Card _getCard(Cards card){
+  Card _getCard(Goal card){
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -78,7 +78,7 @@ class _GoalsPageState extends State<GoalsPage> {
       ),)
     );
   }
-  _getFooter(Cards card){
+  _getFooter(Goal card){
 
     String ahorrado = "0";
 
@@ -100,7 +100,7 @@ class _GoalsPageState extends State<GoalsPage> {
     );  
   }
 
-  LinearPercentIndicator _getBar(Cards card){
+  LinearPercentIndicator _getBar(Goal card){
     return LinearPercentIndicator(
             percent: card.percent,
             lineHeight: 20.0,
@@ -111,16 +111,18 @@ class _GoalsPageState extends State<GoalsPage> {
               : Colors.red,
           );
   }
-  Row _getHeader(Cards cards){
+  Row _getHeader(Goal cards){
     return Row(
       children: [
-        CircleAvatar(backgroundImage: cards.imagen,),
+        const CircleAvatar(backgroundImage:
+        NetworkImage("https://thumbs.dreamstime.com/b/goals-icon-vector-red-target-arrow-achievement-concept-illustration-148419541.jpg"),
+        ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(cards.titulo, style: titleStyle,),
+              Text(cards.title, style: titleStyle,),
               Text("Fecha limite ${cards.endDate}")
             ],
           ),

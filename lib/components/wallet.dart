@@ -39,12 +39,11 @@ class _WalletComponentState extends State<WalletComponent> {
             borderRadius: BorderRadius.circular(10),
           ),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
+              children: [
               IconButton(
                 icon: const Icon(
-                  Icons.add,
-                  size : 40,
+                  Icons.add_box,
+                  size : 30,
                   color: Colors.white,
                 ),
                 onPressed: () {
