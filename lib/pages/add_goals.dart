@@ -2,7 +2,6 @@ import 'package:finances/constants/button_style.dart';
 import 'package:finances/models/accounts.dart';
 import 'package:finances/models/goals.dart';
 import 'package:finances/models/cuotas.dart';
-import 'package:finances/models/list/goal_list.dart';
 import 'package:finances/provider/database.dart';
 import 'package:flutter/material.dart';
 
@@ -155,11 +154,10 @@ class _AddGoalsPageState extends State<AddGoalsPage> {
     final newGoal = Goal(name, dateController.text, 
                 totalValue, savedMoney, defaultCouta, true);
 
-    final newAccount = Account(name, savedMoney.toString(), 2);
+    final newAccount = Account("goal "+ name, savedMoney.toString(), 2);
     DBProvider.db.database.then((db) => db.insert("accounts", newAccount.toJson()));
     DBProvider.db.database.then((db) => db.insert("goals", newGoal.toJson()));
 
-    cardList.add(newGoal);
     Navigator.pop(context);
   }
 }

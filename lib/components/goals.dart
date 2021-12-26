@@ -1,6 +1,5 @@
 import 'package:finances/constants/button_style.dart';
 import 'package:finances/models/goals.dart';
-import 'package:finances/models/list/goal_list.dart';
 import 'package:finances/pages/goals_graph.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
@@ -24,9 +23,7 @@ class _GoalsPageState extends State<GoalsPage> {
         children: [
           const Text("OBJETIVOS", style: titleStyle),
           space,
-          Column(
-            children: _getCardByList(),
-          ),
+          _getGoalsByList(),
           _addButton(),
         ]
       ),
@@ -45,45 +42,54 @@ class _GoalsPageState extends State<GoalsPage> {
   );
   }
 
-  List<Card> _getCardByList(){
-
+  Widget _getGoalsByList() {
     List<Card> response = [];
-
-    cardList.forEach((card) {
-      final cardTemp = _getCard(card);
-      response.add(cardTemp);
-    });
-    
-    return response;
+    List<Goal> goals  = [];
+    return FutureBuilder(
+      initialData: goals,
+      future: getGoals(),
+      builder: (context, snapshoot){
+        if (snapshoot.hasData){
+          goals  =  snapshoot.data as List<Goal>;
+          goals.forEach((goal) {
+            final cardTemp = _getCard(goal);
+            response.add(cardTemp);
+          });
+          return Column(
+            children: response,
+          );
+        }
+        return Column();
+      },);
   }
 
-  Card _getCard(Goal card){
+  Card _getCard(Goal goal){
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: InkWell(
           onTap: () {
             Navigator.push(context, 
-            MaterialPageRoute(builder: (context) => GoalsGraph(card: card,)),
+            MaterialPageRoute(builder: (context) => GoalsGraph(goal: goal,)),
             );
           }, 
         child: Column(
           children: [
-            _getHeader(card),
+            _getHeader(goal),
             space,
-            _getBar(card),
-            _getFooter(card),
+            _getBar(goal),
+            _getFooter(goal),
           ],
         ),
       ),)
     );
   }
-  _getFooter(Goal card){
+  _getFooter(Goal goal){
 
     String ahorrado = "0";
 
-    if (card.moneySaved != 0){
-      ahorrado = card.moneySaved.toStringAsFixed(0);
+    if (goal.moneySaved != 0){
+      ahorrado = goal.moneySaved.toStringAsFixed(0);
     }
 
     return Padding(
@@ -93,7 +99,7 @@ class _GoalsPageState extends State<GoalsPage> {
         children: [
           Text("Ahorrado \$ $ahorrado", 
               style: const TextStyle(color: Colors.green),),
-          Text("Objetivo \$ ${card.moneyEnd.toStringAsFixed(0)}")
+          Text("Objetivo \$ ${goal.moneyEnd.toStringAsFixed(0)}")
           // TODO: hacer que el dinero tenga las seraciones persos colombianos
         ],
       ),
@@ -111,7 +117,7 @@ class _GoalsPageState extends State<GoalsPage> {
               : Colors.red,
           );
   }
-  Row _getHeader(Goal cards){
+  Row _getHeader(Goal goal){
     return Row(
       children: [
         const CircleAvatar(backgroundImage:
@@ -122,8 +128,8 @@ class _GoalsPageState extends State<GoalsPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(cards.title, style: titleStyle,),
-              Text("Fecha limite ${cards.endDate}")
+              Text(goal.title, style: titleStyle,),
+              Text("Fecha limite ${goal.endDate}")
             ],
           ),
         )  

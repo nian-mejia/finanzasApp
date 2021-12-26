@@ -47,7 +47,8 @@ class _WalletComponentState extends State<WalletComponent> {
                   color: Colors.white,
                 ),
                 onPressed: () {
-                  Navigator.pushNamed(context, 'addAccount');
+                  Navigator.pushNamed(context, 'addAccount').
+                  then((_) => setState(() {}));
                 }
               ),
             ],

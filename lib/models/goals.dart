@@ -43,22 +43,22 @@ class Goal{
   } 
 }
 
-Goal goalfromJSon(Map<String, Object?> json){
+Goal goalfromJson(Map<String, Object?> json){
     String title = json["title"] as String;
     String endDate = json["end_date"] as String;
-    double moneySaved = json["money_saved"] as double;
-    double moneyEnd = json["money_end"] as double;
+    double moneySaved = (json["money_saved"] as int).toDouble();
+    double moneyEnd =(json["money_end"] as int).toDouble();
     cuotas cuota = getCuotaByString(json["cuota"] as String);
-    bool status = json["status"] as bool;
+    bool status = (json["status"] as int) == 1 ? true : false;
     return Goal(title, endDate, moneySaved, moneyEnd, cuota, status);
 }
 
 Future<List<Goal>> getGoals() async{
-  List<Goal> responseAccounts = [];
+  List<Goal> responseGoals = [];
   Database db = await  DBProvider.db.database;
-  List<Map<String, Object?>> accounts =  await db.query("goals");
-  for (var element in accounts) {
-    responseAccounts.add(goalfromJSon(element));
+  List<Map<String, Object?>> goals =  await db.query("goals", where: "status = 1");
+  for (var element in goals) {
+    responseGoals.add(goalfromJson(element));
   }
-  return responseAccounts;
+  return responseGoals;
 }

@@ -7,9 +7,9 @@ import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class GoalsGraph extends StatefulWidget {
 
-  Goal? card;
+  Goal? goal;
 
-  GoalsGraph({Key? key, @required this.card}) : super(key: key);
+  GoalsGraph({Key? key, @required this.goal}) : super(key: key);
 
   @override
   _GoalsGraphState createState() => _GoalsGraphState();
@@ -32,9 +32,9 @@ class _GoalsGraphState extends State<GoalsGraph> {
       padding: const EdgeInsets.all(15.0),
       child: Column(
         children: [
-          _getHeader(widget.card!),
-          _getGraph(widget.card!),
-          _getInfoAboutDate(widget.card!),
+          _getHeader(widget.goal!),
+          _getGraph(widget.goal!),
+          _getInfoAboutDate(widget.goal!),
         ],
       ),
     );
