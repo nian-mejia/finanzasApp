@@ -34,7 +34,7 @@ Account accountfromJSon(Map<String, Object?> json){
 Future<List<Account>> getAccounts() async{
   List<Account> responseAccounts = [];
   Database db = await  DBProvider.db.database;
-  List<Map<String, Object?>> accounts =  await db.query("accounts");
+  List<Map<String, Object?>> accounts =  await db.query("accounts", where: "visible != 2");
   for (var element in accounts) {
     responseAccounts.add(accountfromJSon(element));
   }

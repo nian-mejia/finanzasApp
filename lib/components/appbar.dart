@@ -60,7 +60,7 @@ class AppbarPing extends StatelessWidget {
               const Icon(Icons.savings, size: 35,),
               SizedBox(width: 3.w,),
               FutureBuilder(
-                //initialData: const Text("Saldo \$ 0"),
+                initialData: const Text("Saldo \$ 0"),
                 future: getTotal(),
                 builder: (context, snapshot) {
                   if (snapshot.hasError){

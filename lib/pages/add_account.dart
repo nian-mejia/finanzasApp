@@ -1,9 +1,9 @@
 
+import 'package:finances/constants/titles.dart';
 import 'package:finances/models/accounts.dart';
 import 'package:finances/models/cuotas.dart';
-import 'package:finances/models/user.dart';
-import 'package:finances/pages/info.dart';
 import 'package:finances/provider/database.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AddAccountPage extends StatefulWidget {
@@ -21,6 +21,7 @@ class _AddAccountPageState extends State<AddAccountPage> {
 
   final space = const SizedBox(height: 15);
   cuotas defaultCouta = cuotas.Mensual;
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -30,24 +31,36 @@ class _AddAccountPageState extends State<AddAccountPage> {
         actions: [
           TextButton(onPressed: 
             (){
-              _saveAccount();
+              // Validate returns true if the form is valid, or false otherwise.
+              if (_formKey.currentState!.validate()) {
+                if (_saveAccount()){
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(backgroundColor: colorApp,
+                    content: Text('El valor debe ser númerico y sin puntos.', 
+                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),)),
+                  );
+                }
+              }
             }, child: const Text("Guardar")),
-        ],
+        ]
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _getTextField(nameController, "Nombre de la cuenta"),
-            space,          
-            _getTextFieldValue(valueController, "Saldo inicial"),
-            space,
-            _excludeField()
-          ],
+        child: Form(
+          key: _formKey,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _getTextField(nameController, "Nombre de la cuenta"),
+              space,          
+              _getTextFieldValue(valueController, "Saldo inicial"),
+              space,
+              _excludeField()
+            ],
         ),
-      ),
+        ),
+      )
     );
   }
 
@@ -75,8 +88,14 @@ class _AddAccountPageState extends State<AddAccountPage> {
           );
   }
 
-  TextField _getTextFieldValue(TextEditingController controller, String label) {
-    return TextField(
+  TextFormField _getTextFieldValue(TextEditingController controller, String label) {
+    return TextFormField(
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter some value';
+              }
+              return null;
+            },
             controller: controller,
             keyboardType: TextInputType.number,
             decoration:   InputDecoration(
@@ -86,13 +105,18 @@ class _AddAccountPageState extends State<AddAccountPage> {
           );
   }
 
-  _saveAccount(){
+  bool _saveAccount(){
     String value = "0";
     String name  = "Account";
     int visible = 1;
 
     if (valueController.text.isNotEmpty){
       value = valueController.text.toString();
+      try {
+        double.parse(value);
+      }on FormatException{
+        return true;
+      }
     }
 
     if (nameController.text.isNotEmpty){
@@ -108,5 +132,6 @@ class _AddAccountPageState extends State<AddAccountPage> {
     Account account = Account(name, value, visible);
     DBProvider.db.database.then((db) => db.insert("accounts", account.toJson()));
     Navigator.popAndPushNamed(context, "info");
+    return false;
     }
 }
