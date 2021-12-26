@@ -44,10 +44,15 @@ class _GoalsGraphState extends State<GoalsGraph> {
 
     final today = DateTime.now();
     final endDate = DateFormat('yyyy-MM-dd').parse(card.endDate);
+    bool  isTimeOutDate = endDate.isBefore(today);
+
     final duration = endDate.difference(today);
     final nCuotas = duration.inDays / getNumber(card);
+    double accountMin = 0;
+    if (card.moneyEnd > card.moneySaved){
+      accountMin = ( card.moneyEnd - card.moneySaved) / nCuotas; 
+    }
     
-    final accountMin = ( card.moneyEnd - card.moneySaved) / nCuotas; 
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: Column(
@@ -57,14 +62,16 @@ class _GoalsGraphState extends State<GoalsGraph> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(height: 25,),
+              const SizedBox(height: 25,),
               const Text("Número de cuotas ", style: titleStyle,),
-              SizedBox(width: 10,),
+              const SizedBox(width: 10,),
+              isTimeOutDate &&  accountMin != 0 ? 
+              const Text("1", style: titleStyleBigColorRed,):
+              accountMin == 0 ? const Text("0", style: titleStyleBigColorBlue,) : 
+              nCuotas.round() == 0 ? const Text("1", style: titleStyleBigColorBlue,) :
               Text("${nCuotas.round()}", style: titleStyleBigColorBlue,),
-
             ],
-          )
-
+          ),
         ],
       ),
     );
@@ -96,7 +103,10 @@ class _GoalsGraphState extends State<GoalsGraph> {
               );
   }
 
-  Row _getHeader(Goal cards){
+  Row _getHeader(Goal card){
+    final today = DateTime.now();
+    final endDate = DateFormat('yyyy-MM-dd').parse(card.endDate);
+    bool  isTimeOutDate = endDate.isBefore(today);
     return Row(
       children: [
         const CircleAvatar(
@@ -108,8 +118,10 @@ class _GoalsGraphState extends State<GoalsGraph> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(cards.title, style: titleStyleBig,),
-              Text("Fecha limite ${cards.endDate}")
+              Text(card.title, style: titleStyleBig,),
+              isTimeOutDate ? 
+              Text("${card.endDate} CADUCADO", style: titleStyleBigColorRed,)
+              : Text("Fecha limite ${card.endDate}"),
             ],
           ),
         )  

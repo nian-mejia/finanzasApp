@@ -23,6 +23,7 @@ class Goal{
 
     if (moneySaved != 0){
       percent =  moneySaved / moneyEnd;
+      percent = double.parse(percent.toStringAsFixed(2));
     }
 
     cuota ??= cuotas.Mensual;
@@ -50,7 +51,7 @@ Goal goalfromJson(Map<String, Object?> json){
     double moneyEnd =(json["money_end"] as int).toDouble();
     cuotas cuota = getCuotaByString(json["cuota"] as String);
     bool status = (json["status"] as int) == 1 ? true : false;
-    return Goal(title, endDate, moneySaved, moneyEnd, cuota, status);
+    return Goal(title, endDate, moneyEnd, moneySaved, cuota, status);
 }
 
 Future<List<Goal>> getGoals() async{

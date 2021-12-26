@@ -90,12 +90,6 @@ class _AddAccountPageState extends State<AddAccountPage> {
 
   TextFormField _getTextFieldValue(TextEditingController controller, String label) {
     return TextFormField(
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Please enter some value';
-              }
-              return null;
-            },
             controller: controller,
             keyboardType: TextInputType.number,
             decoration:   InputDecoration(
