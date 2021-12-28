@@ -132,7 +132,7 @@ class _GoalsPageState extends State<GoalsPage> {
               Text("Fecha limite ${goal.endDate}")
             ],
           ),
-        )  
+        ), 
       ],
     );
   }

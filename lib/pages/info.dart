@@ -53,7 +53,8 @@ class _InfoState extends State<InfoPage> {
         FloatingActionButton(
           backgroundColor: ColorSelectAndButton,
           child: const Icon(Icons.add),
-          onPressed: ()=> print("click floating")) : null,
+          onPressed: ()=> Navigator.pushNamed(context, "categories")) 
+          : null,
     );
   }
   }
