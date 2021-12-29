@@ -1,4 +1,5 @@
 
+import 'package:finances/components/text_fields.dart';
 import 'package:finances/constants/titles.dart';
 import 'package:finances/models/accounts.dart';
 import 'package:finances/models/cuotas.dart';
@@ -52,10 +53,8 @@ class _AddAccountPageState extends State<AddAccountPage> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _getTextField(nameController, "Nombre de la cuenta"),
-              space,          
-              _getTextFieldValue(valueController, "Saldo inicial"),
-              space,
+              getTextField(nameController, "Nombre de la cuenta"),
+              getTextFieldValue(valueController, "Saldo inicial"),
               _excludeField()
             ],
         ),
@@ -79,26 +78,6 @@ class _AddAccountPageState extends State<AddAccountPage> {
     );
   }
   
-  TextField _getTextField(TextEditingController controller, String label) {
-    return TextField(
-            controller: controller,
-            decoration: InputDecoration(
-              labelText: label,
-            ),
-          );
-  }
-
-  TextFormField _getTextFieldValue(TextEditingController controller, String label) {
-    return TextFormField(
-            controller: controller,
-            keyboardType: TextInputType.number,
-            decoration:   InputDecoration(
-              labelText: label,
-              prefixIcon: const Icon(Icons.attach_money, size: 23,),
-            ),
-          );
-  }
-
   bool _saveAccount(){
     String value = "0";
     String name  = "Account";

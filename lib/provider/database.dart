@@ -49,7 +49,7 @@ class DBProvider {
         await db.insert("categories", Category("Travel", 0xe299).toJson());
         await db.insert("categories", Category("Comunications", 0xe643).toJson());
         await db.insert("categories", Category("Health", 0xf0f2).toJson());
-        await db.insert("categories", Category("Regalos", 0xf2f4).toJson());
+        await db.insert("categories", Category("Gifts", 0xf2f4).toJson());
         await db.insert("categories", Category("Incomming", 0xeea2).toJson());
         await db.insert("categories", Category("Others", 0xee71).toJson());
       }

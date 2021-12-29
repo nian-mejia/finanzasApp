@@ -4,6 +4,7 @@ import 'package:finances/components/goals.dart';
 import 'package:finances/components/wallet.dart';
 import 'package:finances/constants/titles.dart';
 import 'package:finances/models/user.dart';
+import 'package:finances/pages/recorder_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
@@ -51,17 +52,6 @@ class _InfoState extends State<InfoPage> {
         },
       ),
       floatingActionButton: currentIndex == 0 ? 
-        /*
-        FloatingActionButton(
-          backgroundColor: ColorSelectAndButton,
-          child: const Icon(Icons.add),
-          onPressed: () { 
-            Navigator.pushNamed(context, "categories").
-              then((value)
-                {   
-                setState(() {});
-              });
-            })*/
             _getFloatingActionButton()
           : null,
     );
@@ -76,7 +66,6 @@ class _InfoState extends State<InfoPage> {
           spaceBetweenChildren: 4,
           visible: true,
           backgroundColor: ColorSelectAndButton,
-          //activeBackgroundColor: Colors.cyan,
           elevation: 8.0,
           isOpenOnStart: false,
           animationSpeed: 200,
@@ -90,18 +79,26 @@ class _InfoState extends State<InfoPage> {
               onTap: () {},
             ),
             SpeedDialChild(
-              child:  const Icon(Icons.attach_money) ,
+              child:  const Icon(Icons.attach_money, size: 30,) ,
               backgroundColor: Colors.blueAccent,
               foregroundColor: Colors.white,
               label: 'Ingresos',
-              onLongPress: () {},
+              onTap: () {
+                Navigator.push(context, 
+                MaterialPageRoute(builder: (context) => 
+                RecordedPage("Ingresos")));
+              },
             ),
             SpeedDialChild(
               child:  const Icon(Icons.shopping_cart),
               backgroundColor: Colors.red,
               foregroundColor: Colors.white,
               label: 'Gastos',
-              onTap: () {},
+              onTap: () {
+                Navigator.push(context, 
+                MaterialPageRoute(builder: (context) => 
+                RecordedPage("Gastos")));
+              },
             ),
           ],
         );
