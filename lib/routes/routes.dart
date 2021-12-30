@@ -3,6 +3,7 @@ import 'package:finances/pages/add_account.dart';
 import 'package:finances/pages/add_goals.dart';
 import 'package:finances/pages/add_badget.dart';
 import 'package:finances/pages/categories.dart';
+import 'package:finances/pages/get_accounts.dart';
 import 'package:finances/pages/info.dart';
 import 'package:finances/pages/loading.dart';
 import 'package:finances/pages/login_page.dart';
@@ -16,5 +17,6 @@ Map<String, WidgetBuilder> routes  = {
   "login": (context) => const LoginPage(),
   "loading": (context) => LoadingPage(),
   "categories": (context) => const CategoriePage(),
+  "accounts": (context) => const AccountPage(),
 };
 

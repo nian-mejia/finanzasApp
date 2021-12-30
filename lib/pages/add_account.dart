@@ -6,6 +6,7 @@ import 'package:finances/models/cuotas.dart';
 import 'package:finances/provider/database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 class AddAccountPage extends StatefulWidget {
   AddAccountPage({Key? key}) : super(key: key);
@@ -64,7 +65,9 @@ class _AddAccountPageState extends State<AddAccountPage> {
   }
 
   Widget _excludeField(){
-    return Row(
+    return Padding(
+    padding: EdgeInsets.symmetric(horizontal: 3.0.w, vertical: 2.0.h),
+    child: Row(
       children: [
         const Text("Incluir en el saldo total", style: 
           TextStyle(fontWeight: FontWeight.bold),),
@@ -75,7 +78,7 @@ class _AddAccountPageState extends State<AddAccountPage> {
               });
             },),
       ],
-    );
+    ));
   }
   
   bool _saveAccount(){
