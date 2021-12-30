@@ -1,3 +1,4 @@
+import 'package:finances/components/text_fields.dart';
 import 'package:finances/constants/button_style.dart';
 import 'package:finances/constants/titles.dart';
 import 'package:finances/models/accounts.dart';
@@ -47,27 +48,21 @@ class _AddGoalsPageState extends State<AddGoalsPage> {
             }, child: const Text("Guardar")),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15),
-        child: Form(
+      body: Form(
           key: _formKey,
           child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _getTextField(nameController,  "Nombre del objetivo"),
-            space,          
-            _getTextFieldValue(valueController, "Valor"),
-            space,
-            _getTextFieldValue(savedController, "Ya ahorrado"),
-            space,
-            _getDataPicker(dateController, "Fecha deseada"),
-            space,
+            getTextField(nameController,  "Nombre del objetivo"),
+            getTextFieldValue(valueController, "Valor"),
+            getTextFieldValue(savedController, "Ya ahorrado"),
+            getDataPicker(dateController, "Fecha deseada", context),
             _getCuotas(),
           ],
         ),
       ),
-    ));
+    );
   }
 
   Widget _getCuotas(){
@@ -75,85 +70,32 @@ class _AddGoalsPageState extends State<AddGoalsPage> {
     List<DropdownMenuItem<String>> items = [];
 
     cuotas.values.forEach((item){
-      
       items.add(DropdownMenuItem(
         value: item.toString(),
         child: Text(item.name)));
     });
 
-    return SizedBox(
-      width: 200,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          const Text("Periodos", style: titleStyle,),
-          DropdownButton(
-            value: defaultCouta.toString(),
-            items: items, 
-            onChanged: (String? item){
-              setState(() {
-                defaultCouta = getCuotaByString(item);
-              });
-            }
-            ),
-        ],
+    return Padding(
+      padding: padding,
+      child: SizedBox(
+        width: 200,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text("Periodos", style: titleStyle,),
+            DropdownButton(
+              value: defaultCouta.toString(),
+              items: items, 
+              onChanged: (String? item){
+                setState(() {
+                  defaultCouta = getCuotaByString(item);
+                });
+              }
+              ),
+          ],
+        ),
       ),
     );
-  }
-
-  _selectDate() async{
-    final today = DateTime.now();
-
-    final datePicker = await showDatePicker(
-      context: context, 
-      initialDate: today, 
-      firstDate: DateTime(today.year), 
-      lastDate: DateTime(today.year + 50),
-      locale:  const Locale("es", "ES")  
-    );
-    
-    if (datePicker != null){
-     dateController.text = "${datePicker.year}-${datePicker.month}-${datePicker.day}";
-    }
-  }
-
-  TextFormField _getDataPicker(TextEditingController controller, String label){
-   return TextFormField(
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Please enter some value';
-              }
-              return null;
-            },
-            controller: controller,
-            decoration: InputDecoration(
-              labelText: label,
-            ),
-            onTap: (){
-              FocusScope.of(context).requestFocus(FocusNode());
-              _selectDate();
-            },
-            );
-  }
-
-  TextField _getTextField(TextEditingController controller, String label,) {
-    return TextField(
-            controller: controller,
-            decoration: InputDecoration(
-              labelText: label,
-            ),
-          );
-  }
-
-  TextField _getTextFieldValue(TextEditingController controller, String label) {
-    return TextField(
-            controller: controller,
-            keyboardType: TextInputType.number,
-            decoration:   InputDecoration(
-              labelText: label,
-              prefixIcon: const Icon(Icons.attach_money, size: 23,),
-            ),
-          );
   }
 
   String _saveGoal(){
