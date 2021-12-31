@@ -2,9 +2,9 @@
 import 'package:finances/models/category.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:path/path.dart';
 
 import 'dart:io';
-import 'package:path/path.dart';
 
 class DBProvider {
 
@@ -52,6 +52,8 @@ class DBProvider {
         await db.insert("categories", Category("Gifts", 0xf2f4).toJson());
         await db.insert("categories", Category("Incomming", 0xeea2).toJson());
         await db.insert("categories", Category("Others", 0xee71).toJson());
+        
+        await db.execute('CREATE TABLE records (id INTEGER PRIMARY KEY, date TEXT, description TEXT, value INTEGER, category_id INTEGER, account_id INTEGER, type TEXT);');
       }
     );
   }

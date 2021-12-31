@@ -2,6 +2,8 @@ import 'package:finances/components/text_fields.dart';
 import 'package:finances/constants/titles.dart';
 import 'package:finances/models/accounts.dart';
 import 'package:finances/models/category.dart';
+import 'package:finances/models/records.dart';
+import 'package:finances/provider/database.dart';
 import 'package:flutter/material.dart';
 
 class RecordedPage extends StatefulWidget {
@@ -22,7 +24,8 @@ class _RecordedPageState extends State<RecordedPage> {
   final categoryController = TextEditingController();
   final accountController = TextEditingController();
   final datePickerController = TextEditingController();
-
+  late Category categorySelected;
+  late Account accountSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +45,6 @@ class _RecordedPageState extends State<RecordedPage> {
                        fontWeight: FontWeight.bold),)),
                   );
                 }
-                Navigator.pop(context);
               }
             }, child: const Text("Guardar")),
         ],
@@ -86,7 +88,8 @@ class _RecordedPageState extends State<RecordedPage> {
           onTap: () async {
             final account = await Navigator.pushNamed(context, "accounts");
             if (account != null){
-              accountController.text = "${(account as Account).name} \$${(account as Account).value}";
+              accountSelected = account as Account;
+              accountController.text = "${accountSelected.name} \$${accountSelected.value}";
             }
           },
       )
@@ -115,9 +118,10 @@ class _RecordedPageState extends State<RecordedPage> {
                   suffix: Icon(Icons.keyboard_arrow_down, size: 23,),
           ),
           onTap: () async {
-            final account = await Navigator.pushNamed(context, "categories");
-            if (account != null){
-              categoryController.text = (account as Category).name;
+            final category = await Navigator.pushNamed(context, "categories");
+            if (category != null){
+              categorySelected = category as Category;
+              categoryController.text = categorySelected.name;
             }
           },
       )
@@ -125,6 +129,36 @@ class _RecordedPageState extends State<RecordedPage> {
   }
 
   String _saveRecord() {
-    return "message";
+    final date = datePickerController.text;
+    final description =  descriptionController.text;
+    double value  = 0;
+    if (valueController.text.isNotEmpty){
+      try {
+        value  = double.parse(valueController.text);
+      }on FormatException{
+        return "El campo valor debe ser númerico y sin puntos ni comas.";
+      }
+    }
+
+    var type = "";
+    if (widget.title == "Ingresos"){
+      type = "ingreso";
+    }else{
+      type = "gasto";
+    }
+
+    final record = Record(date, description, value, categorySelected.id, accountSelected.id, type);
+    DBProvider.db.database.then((db) => db.insert("records", record.toJson()));
+
+    if (type == "ingreso"){
+      accountSelected.value += value;
+    }else{
+      accountSelected.value -= value;
+    }
+    DBProvider.db.database.then((db) => db.update("accounts", accountSelected.toJson()));
+
+    Navigator.pop(context);
+
+    return "";
   }
 }

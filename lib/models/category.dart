@@ -22,9 +22,10 @@ class Category{
 }
 
 Category categoryfromJSon(Map<String, Object?> json){
+    int id = json["id"] as int;
     String name = json["name"] as String;
     int icon = json["icon"] as int;
-    return Category(name, icon);
+    return Category._(id, name, icon);
 }
 
 Future<List<Category>> getCategories() async{

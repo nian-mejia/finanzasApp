@@ -82,14 +82,13 @@ class _AddAccountPageState extends State<AddAccountPage> {
   }
   
   bool _saveAccount(){
-    String value = "0";
+    double value = 0;
     String name  = "Account";
     int visible = 1;
 
     if (valueController.text.isNotEmpty){
-      value = valueController.text.toString();
       try {
-        double.parse(value);
+        value = double.parse(valueController.text);
       }on FormatException{
         return true;
       }

@@ -129,7 +129,7 @@ class _AddGoalsPageState extends State<AddGoalsPage> {
     final newGoal = Goal(name, dateController.text, 
                 totalValue, savedMoney, defaultCouta, true);
 
-    final newAccount = Account("goal "+ name, savedMoney.toString(), 2);
+    final newAccount = Account("goal "+ name, savedMoney, 2);
     DBProvider.db.database.then((db) => db.insert("accounts", newAccount.toJson()));
     DBProvider.db.database.then((db) => db.insert("goals", newGoal.toJson()));
 

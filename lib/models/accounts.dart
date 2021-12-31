@@ -4,14 +4,15 @@ import 'package:finances/provider/database.dart';
 import 'package:sqflite/sqflite.dart';
 
 class Account{
+  int id;
   String name;
-  String value;
+  double value;
   int visible;
 
-  Account._(this.name, this.value, this.visible); 
+  Account._(this.id, this.name, this.value, this.visible); 
 
-  factory Account(String name, String value, int visible){
-    return Account._(name, value, visible);
+  factory Account(String name, double value, int visible){
+    return Account._(0, name, value, visible);
   }
 
   Map<String, dynamic> toJson() {
@@ -25,10 +26,11 @@ class Account{
 }
 
 Account accountfromJSon(Map<String, Object?> json){
+    int id = json["id"] as int;
     String name = json["name"] as String;
-    String value = json["value"] as String;
+    double value = double.parse(json["value"] as String);
     int visible = json["visible"] as int;
-    return Account._(name, value, visible);
+    return Account._(id, name, value, visible);
   }
 
 Future<List<Account>> getAccounts() async{
@@ -60,7 +62,7 @@ Future<double> getTotal() async{
     responseAccounts.add(accountfromJSon(element));
   }
   for (var element in responseAccounts){
-    total += double.parse(element.value);
+    total += element.value;
   }
   return total;
 }

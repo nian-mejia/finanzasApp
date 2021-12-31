@@ -61,11 +61,11 @@ class _WalletComponentState extends State<WalletComponent> {
     List<Widget> accounts = [];
     return  FutureBuilder(
             builder: (context, snapshot) {
-              final data  =  snapshot.data as List;
-              if (snapshot.hasError || data.length == 0){
+              if (snapshot.hasError || !snapshot.hasData){
                   return SizedBox(height: 1.h, width: 100.w,);
                 }
-              for (var item in data as List<Account>) {
+              final data  =  snapshot.data as List<Account>;
+              for (var item in data) {
                 accounts.add(createConteiner(item));
               }
               return Padding(
@@ -83,7 +83,6 @@ class _WalletComponentState extends State<WalletComponent> {
               
             },
             future: getAccounts(),
-            initialData: accounts,
      );
   }
 
@@ -105,7 +104,7 @@ class _WalletComponentState extends State<WalletComponent> {
                 color: Colors.white,
               ),
               Text(account.name, style: titleStyleColorBlue,),
-              Text("\$ "+account.value, style: titleStyleColorBlue,),
+              Text("\$ ${account.value}", style: titleStyleColorBlue,),
             ],
           ),
       );
