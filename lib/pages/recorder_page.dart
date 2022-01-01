@@ -23,9 +23,11 @@ class _RecordedPageState extends State<RecordedPage> {
   final valueController = TextEditingController();
   final categoryController = TextEditingController();
   final accountController = TextEditingController();
+  final accountDestController = TextEditingController();
   final datePickerController = TextEditingController();
   late Category categorySelected;
-  late Account accountSelected;
+  Account accountOriginSelected = Account("", 0, 0);
+  Account accountDestSelected = Account("", 0, 0);
 
   @override
   Widget build(BuildContext context) {
@@ -57,20 +59,27 @@ class _RecordedPageState extends State<RecordedPage> {
               getDataPicker(datePickerController, "Fecha", context),
               getTextFieldValue(valueController, "Valor"),
               getTextField(descriptionController, "Descripción"),
-              _getCategory(),
-              _getAccount(),
+              (widget.title != "Transferencias") ? 
+               _getCategory() : const SizedBox(),
+              (widget.title == "Transferencias") ? 
+               _getAccount("Cuenta de origen", accountController, accountOriginSelected) 
+               : _getAccount("Cuenta", accountController, accountOriginSelected),
+              (widget.title == "Transferencias") ? 
+               _getAccount("Cuenta de destino", accountDestController, accountDestSelected) 
+               : const SizedBox(),
             ],
       ),)
     );
   }
 
-  Padding _getAccount(){
+  Padding _getAccount(String label, TextEditingController controller,
+   Account accountSelect){
     return Padding(
     padding: padding,
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text("Cuenta", style: TextStyle(fontWeight: FontWeight.bold),),
+        Text(label, style: const TextStyle(fontWeight: FontWeight.bold),),
         TextFormField(
           validator: (value) {
             if (value == null || value.isEmpty) {
@@ -78,7 +87,7 @@ class _RecordedPageState extends State<RecordedPage> {
             }
             return null;
           },
-          controller: accountController,
+          controller: controller,
           autofocus: false,
           readOnly: true,
           decoration:  const InputDecoration(
@@ -88,8 +97,11 @@ class _RecordedPageState extends State<RecordedPage> {
           onTap: () async {
             final account = await Navigator.pushNamed(context, "accounts");
             if (account != null){
-              accountSelected = account as Account;
-              accountController.text = "${accountSelected.name} \$${accountSelected.value}";
+              accountSelect.id = (account as Account).id;
+              accountSelect.name = (account as Account).name;
+              accountSelect.value = (account as Account).value;
+              accountSelect.visible = (account as Account).visible;
+              controller.text = "${accountSelect.name} \$ ${accountSelect.value}";
             }
           },
       )
@@ -141,21 +153,37 @@ class _RecordedPageState extends State<RecordedPage> {
     }
 
     var type = "";
-    if (widget.title == "Ingresos"){
+    
+    switch (widget.title) {
+    case "Ingresos":
       type = "ingreso";
-    }else{
-      type = "gasto";
-    }
-
-    final record = Record(date, description, value, categorySelected.id, accountSelected.id, type);
-    DBProvider.db.database.then((db) => db.insert("records", record.toJson()));
+      break;
+    case "Gastos": 
+       type = "gasto";
+      break;
+    case "Transferencias": 
+       type = "transfer";
+      break;
+  }
 
     if (type == "ingreso"){
-      accountSelected.value += value;
-    }else{
-      accountSelected.value -= value;
+      accountOriginSelected.value += value;
+    }if(type == "gasto"){
+      accountOriginSelected.value -= value;
     }
-    DBProvider.db.database.then((db) => db.update("accounts", accountSelected.toJson()));
+
+    if (type != "transfer"){
+      final record = Record(date, description, value, categorySelected.id, accountOriginSelected.id, null,  type);
+      DBProvider.db.database.then((db) => db.insert("records", record.toJson()));
+      DBProvider.db.database.then((db) => db.update("accounts", accountOriginSelected.toJson(),  where: "id = ${accountOriginSelected.id}"));
+    }else{
+      final record = Record(date, description, value, null, accountOriginSelected.id, accountDestSelected.id, type);
+      DBProvider.db.database.then((db) => db.insert("records", record.toJson()));
+      accountOriginSelected.value -= value;
+      accountDestSelected.value += value;
+      DBProvider.db.database.then((db) => db.update("accounts", accountOriginSelected.toJson(), where: "id = ${accountOriginSelected.id}"));
+      DBProvider.db.database.then((db) => db.update("accounts", accountDestSelected.toJson(), where: "id = ${accountOriginSelected.id}"));
+    }
 
     Navigator.pop(context);
 

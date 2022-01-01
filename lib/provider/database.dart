@@ -53,7 +53,7 @@ class DBProvider {
         await db.insert("categories", Category("Incomming", 0xeea2).toJson());
         await db.insert("categories", Category("Others", 0xee71).toJson());
         
-        await db.execute('CREATE TABLE records (id INTEGER PRIMARY KEY, date TEXT, description TEXT, value INTEGER, category_id INTEGER, account_id INTEGER, type TEXT);');
+        await db.execute('CREATE TABLE records (id INTEGER PRIMARY KEY, date TEXT, description TEXT, value INTEGER, category_id INTEGER, account_origin_id INTEGER, account_dest_id INTEGER, type TEXT);');
       }
     );
   }

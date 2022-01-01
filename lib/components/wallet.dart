@@ -59,15 +59,24 @@ class _WalletComponentState extends State<WalletComponent> {
 
   Widget _getGrid() {
     List<Widget> accounts = [];
+    List<Account> data = [];
     return  FutureBuilder(
             builder: (context, snapshot) {
-              if (snapshot.hasError || !snapshot.hasData){
-                  return SizedBox(height: 1.h, width: 100.w,);
-                }
-              final data  =  snapshot.data as List<Account>;
+              if (snapshot.hasError){
+                return const SizedBox();
+              }
+              try{
+                data  =  snapshot.data as List<Account>;
+              }on TypeError{
+                return const SizedBox();
+              }
+              if (data.isEmpty){
+                return const SizedBox();
+              }
               for (var item in data) {
                 accounts.add(createConteiner(item));
               }
+              
               return Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: GridView.count(

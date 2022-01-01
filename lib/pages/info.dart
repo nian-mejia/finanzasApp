@@ -76,7 +76,11 @@ class _InfoState extends State<InfoPage> {
               foregroundColor: Colors.white,
               label: 'Transacciones',
               visible: true,
-              onTap: () {},
+              onTap: () {
+                Navigator.push(context, 
+                MaterialPageRoute(builder: (context) => 
+                RecordedPage("Transferencias")));
+              },
             ),
             SpeedDialChild(
               child:  const Icon(Icons.attach_money, size: 30,) ,
