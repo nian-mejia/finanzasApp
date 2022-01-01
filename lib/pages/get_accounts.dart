@@ -10,19 +10,22 @@ class AccountPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Cuentas"),
       ),
-      body: getListView(),
+      body: getListView(context),
     );
   }
 
-  Widget getListView(){
+  Widget getListView(context){
     List<Account> accounts = [];
+    String allAccounts = ModalRoute.of(context)!.settings.arguments as String;
+
     return FutureBuilder(
       initialData: accounts,
-      future: getAccounts(),
+      future: allAccounts.isEmpty ?  getAccounts() :  getAllAccounts(),
       builder: (context, snapshoot){
         if (snapshoot.hasError ){
           return const SizedBox();

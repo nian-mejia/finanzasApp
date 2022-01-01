@@ -95,7 +95,8 @@ class _RecordedPageState extends State<RecordedPage> {
                   suffix: Icon(Icons.keyboard_arrow_down, size: 23,),
           ),
           onTap: () async {
-            final account = await Navigator.pushNamed(context, "accounts");
+            final account = await Navigator.pushNamed(context, "accounts", 
+              arguments:  (widget.title == "Transferencias") ? "all" : "");
             if (account != null){
               accountSelect.id = (account as Account).id;
               accountSelect.name = (account as Account).name;
