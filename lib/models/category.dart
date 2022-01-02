@@ -37,3 +37,12 @@ Future<List<Category>> getCategories() async{
   }
   return responseCategories;
 }
+
+Future<Category?> getCategoryByID(int? id) async{
+  if (id == null){
+    return null;
+  }
+  Database db = await  DBProvider.db.database;
+  List<Map<String, Object?>> categories =  await db.query("categories", where : "id = $id");
+  return categories.isNotEmpty ? categoryfromJSon(categories.first): null;
+}

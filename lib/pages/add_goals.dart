@@ -101,7 +101,7 @@ class _AddGoalsPageState extends State<AddGoalsPage> {
   String _saveGoal(){
     double totalValue = 0;
     double savedMoney = 0;
-    String name = "Goal";
+    String name = "goal";
 
     if (valueController.text.isNotEmpty){
       totalValue = double.parse(valueController.text);
@@ -129,7 +129,7 @@ class _AddGoalsPageState extends State<AddGoalsPage> {
     final newGoal = Goal(name, dateController.text, 
                 totalValue, savedMoney, defaultCouta, true);
 
-    final newAccount = Account("goal "+ name, savedMoney, 2);
+    final newAccount = Account("Goal "+ name, savedMoney, 2);
     DBProvider.db.database.then((db) => db.insert("accounts", newAccount.toJson()));
     DBProvider.db.database.then((db) => db.insert("goals", newGoal.toJson()));
 

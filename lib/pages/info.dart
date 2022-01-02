@@ -1,12 +1,14 @@
 import 'package:finances/components/appbar.dart';
 import 'package:finances/components/budget.dart';
 import 'package:finances/components/goals.dart';
+import 'package:finances/components/list_records.dart';
 import 'package:finances/components/wallet.dart';
 import 'package:finances/constants/titles.dart';
 import 'package:finances/models/user.dart';
 import 'package:finances/pages/recorder_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:sizer/sizer.dart';
 
 class InfoPage extends StatefulWidget {
   User? googleUser;
@@ -110,7 +112,15 @@ class _InfoState extends State<InfoPage> {
   }
 
   Widget _getBodyHome(){
-    return const Center(child: Text("Home"),);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 1.5.h),
+          child: const Text("Últimos 30 días")),
+        RecordsList(),
+      ],
+    );
   }
 
   Widget _getBodyInfo(){

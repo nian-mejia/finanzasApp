@@ -46,11 +46,20 @@ Future<List<Account>> getAccounts() async{
 Future<List<Account>> getAllAccounts() async{
   List<Account> responseAccounts = [];
   Database db = await  DBProvider.db.database;
-  List<Map<String, Object?>> accounts =  await db.query("accounts");
+  List<Map<String, Object?>> accounts =  await db.query("accounts", where: "visible != 2");
   for (var element in accounts) {
     responseAccounts.add(accountfromJSon(element));
   }
   return responseAccounts;
+}
+
+Future<Account?> getAccountById(int? id) async{
+  if (id == null){
+    return null;
+  }
+  Database db = await  DBProvider.db.database;
+  List<Map<String, Object?>> accounts =  await db.query("accounts", where: "id = $id");
+  return accounts.isNotEmpty ? accountfromJSon(accounts.first) : null;
 }
 
 Future<double> getTotal() async{
