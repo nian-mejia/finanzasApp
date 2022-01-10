@@ -1,9 +1,10 @@
 import 'package:finances/models/user.dart';
 import 'package:finances/pages/add_account.dart';
 import 'package:finances/pages/add_goals.dart';
-import 'package:finances/pages/add_badget.dart';
+import 'package:finances/pages/add_budget.dart';
 import 'package:finances/pages/categories.dart';
 import 'package:finances/pages/get_accounts.dart';
+import 'package:finances/pages/get_categories_with_radiuos_buttons.dart';
 import 'package:finances/pages/info.dart';
 import 'package:finances/pages/loading.dart';
 import 'package:finances/pages/login_page.dart';
@@ -18,5 +19,6 @@ Map<String, WidgetBuilder> routes  = {
   "loading": (context) => LoadingPage(),
   "categories": (context) => const CategoriePage(),
   "accounts": (context) => const AccountPage(),
+  "categories_with_radios": (context) => const CategorieWithRadiuosButtonPage(),
 };
 

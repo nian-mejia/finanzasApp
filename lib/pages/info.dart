@@ -27,7 +27,7 @@ class _InfoState extends State<InfoPage> {
     final user = widget.googleUser;
 
     return Scaffold(
-      appBar: AppbarPing(currentIndex, user).GetAppBar(),
+      appBar: AppbarPing(currentIndex, user).getAppBar(),
       body: _listViews[currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: Colors.amber,
@@ -67,7 +67,7 @@ class _InfoState extends State<InfoPage> {
           childPadding: const EdgeInsets.all(5),
           spaceBetweenChildren: 4,
           visible: true,
-          backgroundColor: ColorSelectAndButton,
+          backgroundColor: colorSelectAndButton,
           elevation: 8.0,
           isOpenOnStart: false,
           animationSpeed: 200,
@@ -81,7 +81,10 @@ class _InfoState extends State<InfoPage> {
               onTap: () {
                 Navigator.push(context, 
                 MaterialPageRoute(builder: (context) => 
-                RecordedPage("Transferencias")));
+                RecordedPage("Transferencias"))).
+                then((value) => 
+                    setState(() {
+                }));
               },
             ),
             SpeedDialChild(
@@ -91,8 +94,11 @@ class _InfoState extends State<InfoPage> {
               label: 'Ingresos',
               onTap: () {
                 Navigator.push(context, 
-                MaterialPageRoute(builder: (context) => 
-                RecordedPage("Ingresos")));
+                  MaterialPageRoute(builder: (context) => 
+                  RecordedPage("Ingresos"))).
+                  then((value) => 
+                    setState(() {
+                  }));
               },
             ),
             SpeedDialChild(
@@ -103,7 +109,10 @@ class _InfoState extends State<InfoPage> {
               onTap: () {
                 Navigator.push(context, 
                 MaterialPageRoute(builder: (context) => 
-                RecordedPage("Gastos")));
+                RecordedPage("Gastos"))).
+                then((value) => 
+                setState(() {
+                }));
               },
             ),
           ],

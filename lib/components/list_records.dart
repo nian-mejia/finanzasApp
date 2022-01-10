@@ -59,8 +59,8 @@ class _RecordsListState extends State<RecordsList> {
                 children: [
                   Text(categoryResponse.name, 
                     style: const TextStyle(fontWeight: FontWeight.bold),),
-                  Text(data.description),
                   _getAccount(data.accountOrigin),
+                  Text(data.description, overflow: TextOverflow.ellipsis),
                 ],
               )
             ],
@@ -80,8 +80,8 @@ class _RecordsListState extends State<RecordsList> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text("Transacción", style: TextStyle(fontWeight: FontWeight.bold)),
-                Text(data.description),
                 _getAccount(data.accountOrigin),
+                Text(data.description, overflow: TextOverflow.ellipsis,),
               ],
             )
           ],
@@ -105,7 +105,7 @@ class _RecordsListState extends State<RecordsList> {
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Text("COP ${data.value}", style: TextStyle(
-          color: colorsRecord[data.type],
+          color: colorsRecord[data.type], overflow: TextOverflow.ellipsis
         ),),
         Text(data.date),
       ],

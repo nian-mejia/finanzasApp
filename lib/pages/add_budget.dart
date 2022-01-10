@@ -1,6 +1,8 @@
+import 'package:finances/components/text_fields.dart';
 import 'package:finances/models/list/budget_list.dart';
 import 'package:finances/models/budgets.dart';
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 class AddPresupuestoPage extends StatefulWidget {
   AddPresupuestoPage({Key? key}) : super(key: key);
@@ -28,28 +30,13 @@ class _AddPresupuestoPageState extends State<AddPresupuestoPage> {
         ],
       ),
       body: Container(
-        height: 200,
         padding: const EdgeInsets.symmetric(horizontal: 15),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            TextField(
-              controller: nameController,
-              decoration: const InputDecoration(
-                label:  Text("Nombre del presupuesto")
-              ),
-            ),
-            TextField(
-              controller: valueController,
-              keyboardType: TextInputType.number,
-              decoration: const InputDecoration(
-                prefixIcon: Icon(Icons.attach_money, size: 23,),
-                labelText: "Valor"
-              ),
-            ),
-            Text("Categoría"),
-            // TODO: Hacer la página de añadir categorias
+            getTextField(nameController, "Nombre del presupuesto"),
+            getTextFieldValue(valueController, "Valor"),
+            _getCategories()
           ],
         ),
       ),
@@ -61,7 +48,25 @@ class _AddPresupuestoPageState extends State<AddPresupuestoPage> {
     if (valueController.text.isNotEmpty){
       value = double.parse(valueController.text);
     }
-    final newBudget = Budget(nameController.text, value);
+    final newBudget = Budget(nameController.text, value, 30);
     budgetsList.add(newBudget);
+  }
+
+  Widget _getCategories() {
+    return Padding(
+      padding: padding,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text("Categoría"),
+          ListTile(
+              leading: const Icon(Icons.add_box_sharp),
+              onTap: () {
+                Navigator.pushNamed(context, "categories_with_radios");
+              },
+            ),
+        ],
+      ),
+    );
   }
 }

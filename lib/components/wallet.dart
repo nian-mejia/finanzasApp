@@ -65,10 +65,12 @@ class _WalletComponentState extends State<WalletComponent> {
               if (snapshot.hasError){
                 return const SizedBox();
               }
+
               try{
                 data  =  snapshot.data as List<Account>;
               }on TypeError{
                 return const SizedBox();
+
               }
               if (data.isEmpty){
                 return const SizedBox();
@@ -80,7 +82,6 @@ class _WalletComponentState extends State<WalletComponent> {
               return Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: GridView.count(
-                  primary: false,
                   shrinkWrap: true, // use this
                   crossAxisSpacing: 5.w,
                   crossAxisCount: 2,
@@ -95,7 +96,7 @@ class _WalletComponentState extends State<WalletComponent> {
      );
   }
 
-  Container createConteiner(Account account){
+  Widget createConteiner(Account account){
     final color = Colors.primaries[Random().nextInt(12)];
     final titleStyleColorBlue = TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: color.shade50);
     return 
@@ -113,7 +114,9 @@ class _WalletComponentState extends State<WalletComponent> {
                 color: Colors.white,
               ),
               Text(account.name, style: titleStyleColorBlue,),
-              Text("\$ ${account.value}", style: titleStyleColorBlue,),
+              Text("\$ ${account.value}", style: titleStyleColorBlue,
+                 overflow: TextOverflow.ellipsis,
+              ),
             ],
           ),
       );

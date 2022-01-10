@@ -13,10 +13,10 @@ class AppbarPing extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetAppBar();
+    return getAppBar();
   }
 
-  PreferredSizeWidget GetAppBar() {
+  PreferredSizeWidget getAppBar() {
   final appBar =  AppBar(title: const Text(title), backgroundColor: colorApp, automaticallyImplyLeading: false,);
 
   return currentIndex == 0 ? PreferredSize(

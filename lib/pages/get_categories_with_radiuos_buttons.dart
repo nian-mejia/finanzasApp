@@ -1,13 +1,19 @@
-import 'dart:math';
-
+import 'package:finances/constants/titles.dart';
 import 'package:finances/models/category.dart';
 import 'package:finances/pages/icon.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
 
-class CategoriePage extends StatelessWidget {
-  const CategoriePage({Key? key}) : super(key: key);
+class CategorieWithRadiuosButtonPage extends StatefulWidget {
+  const CategorieWithRadiuosButtonPage({Key? key}) : super(key: key);
+
+  @override
+  State<CategorieWithRadiuosButtonPage> createState() => _CategorieWithRadiuosButtonPageState();
+}
+
+class _CategorieWithRadiuosButtonPageState extends State<CategorieWithRadiuosButtonPage> {
+  Map<String, bool?> selectedCategories = {};
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +27,7 @@ class CategoriePage extends StatelessWidget {
 
   Widget getListView(){
     List<Category> categories = [];
+
     return FutureBuilder(
       initialData: categories,
       future: getCategories(),
@@ -38,9 +45,17 @@ class CategoriePage extends StatelessWidget {
               children: [
                 ListTile(
                   title: Text(categories[index].name),
-                    leading: getIcon(categories, index),
-                    onTap: () => Navigator.pop(context, categories[index]),
-                  ),
+                  leading: getIcon(categories, index),
+                  trailing: Checkbox(
+                    value: selectedCategories.containsKey("category_$index") ?
+                    selectedCategories["category_$index"]:  false, 
+                    onChanged: (bool? value) {
+                      setState(() {
+                        selectedCategories["category_$index"] = value;
+                      });
+                    },
+                    activeColor: colorSelectAndButton,
+                  )),
                   const Divider(),
               ],
             ),

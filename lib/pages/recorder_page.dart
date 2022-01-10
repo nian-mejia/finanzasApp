@@ -183,7 +183,7 @@ class _RecordedPageState extends State<RecordedPage> {
       accountOriginSelected.value -= value;
       accountDestSelected.value += value;
       DBProvider.db.database.then((db) => db.update("accounts", accountOriginSelected.toJson(), where: "id = ${accountOriginSelected.id}"));
-      DBProvider.db.database.then((db) => db.update("accounts", accountDestSelected.toJson(), where: "id = ${accountOriginSelected.id}"));
+      DBProvider.db.database.then((db) => db.update("accounts", accountDestSelected.toJson(), where: "id = ${accountDestSelected.id}"));
     }
 
     Navigator.pop(context);

@@ -32,7 +32,7 @@ class Record{
 Record recordfromJSon(Map<String, Object?> json){
     String date = json["date"] as String;
     String description = json["description"] as String;
-    double value = (json["value"] as int).toDouble();
+    double value = double.parse(json["value"].toString());
     int? category = (json["category_id"] ==  null) ? null : 
       (json["category_id"] as int);
     int accountOrigin = json["account_origin_id"] as int;
