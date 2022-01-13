@@ -46,10 +46,10 @@ List<Widget> _extractBudget(){
     style:  const TextStyle(fontWeight: FontWeight.bold),);
     
     final gastado = element.gastado == 0 ? "0" :
-                    element.gastado.toStringAsFixed(3);
+                    element.gastado.toStringAsFixed(0);
 
-    final inicial = element.inicial.toStringAsFixed(3);
-    final saldo = Text("$gastado / $inicial");
+    final total = element.totalMoney.toStringAsFixed(0);
+    final saldo = Text("$gastado / $total");
 
     final headers = Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -59,19 +59,18 @@ List<Widget> _extractBudget(){
       ],
     );
     
-    double _percent = 1;
-
-    if (element.status <= 100){
-      _percent = element.status  / 100;
+    double _percent = element.gastado / element.totalMoney;
+    if (_percent > 1){
+      _percent = 1;
     }
 
     final barIndicator = LinearPercentIndicator(
                 percent: _percent,
                 lineHeight: 20.0,
-                center: Text("${element.status}%"),
+                center: Text("${_percent * 100}%"),
                 linearStrokeCap: LinearStrokeCap.butt,
                 backgroundColor: Colors.grey,
-                progressColor: element.status < 100 ? Colors.blue
+                progressColor: _percent < 1 ? Colors.blue
                   : Colors.red,
               );
     response..add(headers)

@@ -54,7 +54,10 @@ class _AddPresupuestoPageState extends State<AddPresupuestoPage> {
       name = nameController.text;
     }
 
-    final newBudget = Budget(name, value, 30);
+    final newBudget = Budget(
+      name: name, day: 30, 
+      totalMoney: value, gastado: 0, saldo: value);
+    
     budgetsList.add(newBudget);
   }
 
