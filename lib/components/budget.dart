@@ -1,5 +1,5 @@
 import 'package:finances/constants/button_style.dart';
-import 'package:finances/models/list/budget_list.dart';
+import 'package:finances/models/list/budget_list_graph.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
@@ -60,12 +60,9 @@ List<Widget> _extractBudget(){
     );
     
     double _percent = element.gastado / element.totalMoney;
-    if (_percent > 1){
-      _percent = 1;
-    }
 
     final barIndicator = LinearPercentIndicator(
-                percent: _percent,
+                percent: _percent > 1 ? 1 : _percent < 0 ? 0 : _percent,
                 lineHeight: 20.0,
                 center: Text("${_percent * 100}%"),
                 linearStrokeCap: LinearStrokeCap.butt,

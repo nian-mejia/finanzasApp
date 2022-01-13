@@ -1,7 +1,7 @@
 import 'package:finances/components/icon.dart';
 import 'package:finances/components/text_fields.dart';
 import 'package:finances/models/category.dart';
-import 'package:finances/models/list/budget_list.dart';
+import 'package:finances/models/list/budget_list_graph.dart';
 import 'package:finances/models/budgets.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
