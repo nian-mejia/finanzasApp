@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:finances/models/category.dart';
-import 'package:finances/pages/icon.dart';
+import 'package:finances/components/icon.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
@@ -38,7 +38,7 @@ class CategoriePage extends StatelessWidget {
               children: [
                 ListTile(
                   title: Text(categories[index].name),
-                    leading: getIcon(categories, index),
+                    leading: getIcon(categories[index]),
                     onTap: () => Navigator.pop(context, categories[index]),
                   ),
                   const Divider(),
