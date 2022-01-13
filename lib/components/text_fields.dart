@@ -11,11 +11,11 @@ Padding getTextField(TextEditingController controller, String label) {
       children: [
         Text(label, style: const TextStyle(fontWeight: FontWeight.bold),),
         TextField(
-                controller: controller,
-                decoration: InputDecoration(
-                  hintText: label,
-                ),
-              ),
+          controller: controller,
+          decoration: InputDecoration(
+            hintText: label,
+          ),
+        ),
       ],
     ),
   );

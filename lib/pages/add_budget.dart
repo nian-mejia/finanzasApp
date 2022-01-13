@@ -44,10 +44,17 @@ class _AddPresupuestoPageState extends State<AddPresupuestoPage> {
 
   _saveBudget(){
     double value = 0;
+    String name = "Presupuesto";
+
     if (valueController.text.isNotEmpty){
-      value = double.parse(valueController.text);
+      value = double.tryParse(valueController.text) ?? 0;
     }
-    final newBudget = Budget(nameController.text, value, 30);
+
+    if (nameController.text.isNotEmpty){
+      name = nameController.text;
+    }
+
+    final newBudget = Budget(name, value, 30);
     budgetsList.add(newBudget);
   }
 
@@ -80,9 +87,10 @@ class _AddPresupuestoPageState extends State<AddPresupuestoPage> {
 
   Widget _drawCategories(List<Category> categories){
     return  Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           SizedBox(
-            height: categories.length < 5 ? (categories.length * 6).h : 35.h,
+            height: categories.length <= 2 ? (categories.length * 6).h : 35.h,
             child: getCategoriesListView(categories)),
           _getIconAdd(),
         ],
