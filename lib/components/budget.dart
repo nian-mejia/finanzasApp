@@ -62,7 +62,7 @@ List<Widget> _extractBudget(){
     double _percent = element.gastado / element.totalMoney;
 
     final barIndicator = LinearPercentIndicator(
-                percent: _percent > 1 ? 1 : _percent < 0 ? 0 : _percent,
+                percent: _percent >= 1 ? 1 : _percent <= 0 ? 0 : _percent,
                 lineHeight: 20.0,
                 center: Text("${_percent * 100}%"),
                 linearStrokeCap: LinearStrokeCap.butt,

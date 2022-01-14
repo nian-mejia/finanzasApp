@@ -3,6 +3,7 @@ import 'package:finances/components/text_fields.dart';
 import 'package:finances/models/category.dart';
 import 'package:finances/models/list/budget_list_graph.dart';
 import 'package:finances/models/budgets.dart';
+import 'package:finances/provider/database.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
@@ -26,10 +27,9 @@ class _AddPresupuestoPageState extends State<AddPresupuestoPage> {
         title: const Text("Nuevo presupuesto"),
         actions: [
           TextButton(onPressed: 
-            (){
-              _saveBudget();
-              Navigator.pop(context);
-            }, child: const Text("Guardar")),
+            () =>
+              _saveBudget()   
+            , child: const Text("Guardar")),
         ],
       ),
       body: Column(
@@ -42,7 +42,7 @@ class _AddPresupuestoPageState extends State<AddPresupuestoPage> {
     );
   }
 
-  _saveBudget(){
+  _saveBudget() async{
     double value = 0;
     String name = "Presupuesto";
 
@@ -56,9 +56,20 @@ class _AddPresupuestoPageState extends State<AddPresupuestoPage> {
 
     final newBudget = Budget(
       name: name, day: 30, 
-      totalMoney: value, gastado: 0, saldo: value);
+      totalMoney: value, gastado: 0);
     
+    int budgetID = await DBProvider.db.database.then((db) => 
+      db.insert("budgets", newBudget.toJson()));
+
+    categories.forEach((category) {
+      DBProvider.db.database.then((db) => 
+      db.insert("budget_has_category", {
+        "budget" : budgetID,
+        "category": category.id,
+      }));
+    });
     budgetsList.add(newBudget);
+    Navigator.pop(context);
   }
 
   Widget _getCategories() {

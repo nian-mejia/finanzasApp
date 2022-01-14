@@ -9,32 +9,37 @@ Budget budgetFromJson(String str) => Budget.fromJson(json.decode(str));
 String budgetToJson(Budget data) => json.encode(data.toJson());
 
 class Budget {
-    Budget({
+    
+    Budget(
+      {
         required this.name,
         required this.totalMoney,
-        required this.saldo,
         required this.gastado,
         required this.day,
     });
 
+    int? id;
     String name;
     double totalMoney;
-    double saldo;
     double gastado;
     int day;
 
-    factory Budget.fromJson(Map<String, dynamic> json) => Budget(
+    factory Budget.fromJson(Map<String, dynamic> json) {
+      
+      final budget =  Budget(
         name: json["name"],
         totalMoney: json["total_money"],
-        saldo: json["saldo"],
         gastado: json["gastado"],
         day: json["day"],
     );
 
+      budget.id = json["id"];
+      return budget;
+    }
+
     Map<String, dynamic> toJson() => {
         "name": name,
         "total_money": totalMoney,
-        "saldo": saldo,
         "gastado": gastado,
         "day": day,
     };

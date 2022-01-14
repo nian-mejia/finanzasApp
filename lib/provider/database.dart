@@ -54,6 +54,14 @@ class DBProvider {
         await db.insert("categories", Category("Others", 0xee71).toJson());
         
         await db.execute('CREATE TABLE records (id INTEGER PRIMARY KEY, date TEXT, description TEXT, value INTEGER, category_id INTEGER, account_origin_id INTEGER, account_dest_id INTEGER, type TEXT);');
+   
+        await db.execute('CREATE TABLE budgets (id INTEGER PRIMARY KEY, name TEXT, total_money INTEGER, gastado INTEGER, day INTEGER);');
+        await db.execute('''
+          CREATE TABLE budget_has_category 
+          (id INTEGER PRIMARY KEY, budget INTEGER, category INTEGER, 
+          FOREIGN KEY(budget) REFERENCES budget(id), 
+          FOREIGN KEY(category) REFERENCES categories(id));'''
+        );
       }
     );
   }
