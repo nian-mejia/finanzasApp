@@ -47,7 +47,10 @@ Future<List<Record>> getRecords() async{
   final last30Days = DateTime.now().add(const Duration(days: -30));
   String last30DaysFormated = "${last30Days.year}-${last30Days.month}-${last30Days.day}";
   Database db = await  DBProvider.db.database;
-  List<Map<String, Object?>> records =  await db.query("records", where: "date >= date($last30DaysFormated)");
+  List<Map<String, Object?>> records =  await 
+    db.query("records", 
+      where: "date >= date($last30DaysFormated)",
+      orderBy: "id desc");
   for (var element in records) {
     responseRecords.add(recordfromJSon(element));
   }
