@@ -1,0 +1,1 @@
+void updateBudgets(double value) {}

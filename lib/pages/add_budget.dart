@@ -31,7 +31,7 @@ class _AddPresupuestoPageState extends State<AddPresupuestoPage> {
             , child: const Text("Guardar")),
         ],
       ),
-      body: Column(
+      body: ListView(
           children: [
             getTextField(nameController, "Nombre del presupuesto"),
             getTextFieldValue(valueController, "Valor"),
@@ -79,47 +79,41 @@ class _AddPresupuestoPageState extends State<AddPresupuestoPage> {
               children: [
                   const Text("Categoría", style: 
                   TextStyle(fontWeight: FontWeight.bold)),
-                  ListTile(
-                      trailing: categories.isEmpty ? _getIconAdd() : null,
-                      title: categories.isNotEmpty ?  _drawCategories(categories) :
-                        const SizedBox(),
-                      onTap: () async {
-                        final categoriesReturn = await Navigator.
-                                pushNamed(context, "categories_with_radios");
-                        categoriesReturn != null ? 
-                          categories = categoriesReturn as List<Category> : null;
-                        setState(() {});
-                      },
-                    ),
-                  ],
+                  categories.isEmpty ? _getIconAdd() :  _drawCategories(categories),
+              ]
               )
             );
   }
 
-  Widget _getIconAdd() => const Icon(Icons.add_box_sharp);
+  Widget _getIconAdd() =>  ListTile(
+    trailing : const Icon(Icons.add_box_sharp),
+    onTap: () async {
+        final categoriesReturn = await Navigator.
+                pushNamed(context, "categories_with_radios");
+        categoriesReturn != null ? 
+          categories = categoriesReturn as List<Category> : null;
+        setState(() {});
+      },
+  );
 
   Widget _drawCategories(List<Category> categories){
-    return  Column(
+    return Column(
         crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          SizedBox(
-            height: categories.length <= 2 ? (categories.length * 6).h : 35.h,
-            child: getCategoriesListView(categories)),
-          _getIconAdd(),
-        ],
+        children: getCategoriesList(categories),
       );
   }
 
-  ListView getCategoriesListView(List<Category> categories) {
-    return ListView.builder(
-          shrinkWrap: true,
-          itemCount: categories.length,
-          itemBuilder: (context, index){
-          return Row(
-            children: [
-              getIcon(categories[index]),
-              Text(categories[index].name),
-            ]);
-        });
+  List<Widget> getCategoriesList(List<Category> categories) {
+    List<Widget> categoriesResponse = [];
+    categories.forEach((category) {
+      final row = Row(
+        children: [
+          getIcon(category),
+          Text(category.name),
+        ]);
+      categoriesResponse.add(row);
+    });
+    categoriesResponse.add(_getIconAdd());
+    return categoriesResponse;
   }
 }
