@@ -137,7 +137,7 @@ class _InfoState extends State<InfoPage> {
             children: [
             WalletComponent(),
             const Divider(),
-            Budget(),
+            BudgetView(),
             const Divider(),
             GoalsPage(),
             const Divider()

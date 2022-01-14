@@ -4,6 +4,9 @@
 
 import 'dart:convert';
 
+import 'package:finances/provider/database.dart';
+import 'package:sqflite/sqflite.dart';
+
 Budget budgetFromJson(String str) => Budget.fromJson(json.decode(str));
 
 String budgetToJson(Budget data) => json.encode(data.toJson());
@@ -28,8 +31,8 @@ class Budget {
       
       final budget =  Budget(
         name: json["name"],
-        totalMoney: json["total_money"],
-        gastado: json["gastado"],
+        totalMoney: double.parse(json["total_money"].toString()),
+        gastado: double.parse(json["gastado"].toString()),
         day: json["day"],
     );
 
@@ -43,4 +46,16 @@ class Budget {
         "gastado": gastado,
         "day": day,
     };
+}
+
+
+Future<List<Budget>> getAllBudget() async{
+  List<Budget> responseBudgets = [];
+  Database db = await  DBProvider.db.database;
+  List<Map<String, Object?>> budgets =  
+    await db.query("budgets");
+  for (var element in budgets) {
+    responseBudgets.add(Budget.fromJson(element));
+  }
+  return responseBudgets;
 }

@@ -1,7 +1,6 @@
 import 'package:finances/components/icon.dart';
 import 'package:finances/components/text_fields.dart';
 import 'package:finances/models/category.dart';
-import 'package:finances/models/list/budget_list_graph.dart';
 import 'package:finances/models/budgets.dart';
 import 'package:finances/provider/database.dart';
 import 'package:flutter/material.dart';
@@ -68,7 +67,7 @@ class _AddPresupuestoPageState extends State<AddPresupuestoPage> {
         "category": category.id,
       }));
     });
-    budgetsList.add(newBudget);
+
     Navigator.pop(context);
   }
 
