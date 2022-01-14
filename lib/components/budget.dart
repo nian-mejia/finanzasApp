@@ -40,13 +40,13 @@ Widget _getBugets(){
 }
 
 Widget _getBudget(){
-  List<Widget> response = [];
   return FutureBuilder(
     future: getAllBudget(),
     builder: (context, snapshoot){
       if (snapshoot.hasError || snapshoot.data == null){
         return const SizedBox();
       }
+      List<Widget> response = [];
       final budgets = snapshoot.data as List<Budget>;
       budgets.forEach((element) {
           Row headers = _getHeaders(element);
