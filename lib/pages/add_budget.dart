@@ -106,7 +106,6 @@ class _AddPresupuestoPageState extends State<AddPresupuestoPage> {
   List<Widget> getCategoriesList(List<Category> categories) {
     List<Widget> categoriesResponse = [];
     categories.forEach((category) {
-      
       final row = Padding(
         padding: const EdgeInsets.all(7.0),
         child: Row(

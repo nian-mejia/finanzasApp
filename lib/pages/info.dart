@@ -121,11 +121,10 @@ class _InfoState extends State<InfoPage> {
   }
 
   Widget _getBodyHome(){
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return ListView(
       children: [
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 1.5.h),
+          padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 2.h),
           child: const Text("Últimos 30 días")),
         RecordsList(),
       ],

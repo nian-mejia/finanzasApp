@@ -55,7 +55,7 @@ class _RecordedPageState extends State<RecordedPage> {
       body: Form(
             key: _formKey,
             child:
-            Column(
+            ListView(
             children: [
               getDataPicker(datePickerController, "Fecha", context),
               getTextFieldValue(valueController, "Valor"),
@@ -172,6 +172,7 @@ class _RecordedPageState extends State<RecordedPage> {
       accountOriginSelected.value += value;
     }if(type == "gasto"){
       accountOriginSelected.value -= value;
+      updateBudgets(value, categorySelected);
     }
 
     if (type != "transfer"){
@@ -179,13 +180,12 @@ class _RecordedPageState extends State<RecordedPage> {
       DBProvider.db.database.then((db) => db.insert("records", record.toJson()));
       DBProvider.db.database.then((db) => db.update("accounts", accountOriginSelected.toJson(),  where: "id = ${accountOriginSelected.id}"));
     }else{
-      final record = Record(date, description, value, null, accountOriginSelected.id, accountDestSelected.id, type);
+      final record = Record(date, description, value, categorySelected.id, accountOriginSelected.id, accountDestSelected.id, type);
       DBProvider.db.database.then((db) => db.insert("records", record.toJson()));
       accountOriginSelected.value -= value;
       accountDestSelected.value += value;
       DBProvider.db.database.then((db) => db.update("accounts", accountOriginSelected.toJson(), where: "id = ${accountOriginSelected.id}"));
       DBProvider.db.database.then((db) => db.update("accounts", accountDestSelected.toJson(), where: "id = ${accountDestSelected.id}"));
-      updateBudgets(value);
     }
 
     Navigator.pop(context);
