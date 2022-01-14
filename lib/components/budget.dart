@@ -70,7 +70,7 @@ LinearPercentIndicator _getBarIndicator(element) {
   final barIndicator = LinearPercentIndicator(
               percent: _percent >= 1 ? 1 : _percent <= 0 ? 0 : _percent,
               lineHeight: 20.0,
-              center: Text("${_percent * 100}%"),
+              center: Text("${(_percent * 100).toStringAsFixed(1)}%"),
               linearStrokeCap: LinearStrokeCap.butt,
               backgroundColor: Colors.grey,
               progressColor: _percent < 1 ? Colors.blue

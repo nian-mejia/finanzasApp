@@ -104,7 +104,7 @@ class _RecordsListState extends State<RecordsList> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        Text("COP ${data.value}", style: TextStyle(
+        Text("COP ${(data.value).toStringAsFixed(0)}", style: TextStyle(
           color: colorsRecord[data.type], overflow: TextOverflow.ellipsis
         ),),
         Text(data.date),

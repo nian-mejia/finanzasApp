@@ -65,7 +65,6 @@ class _WalletComponentState extends State<WalletComponent> {
               if (snapshot.hasError){
                 return const SizedBox();
               }
-
               try{
                 data  =  snapshot.data as List<Account>;
               }on TypeError{
@@ -114,7 +113,7 @@ class _WalletComponentState extends State<WalletComponent> {
                 color: Colors.white,
               ),
               Text(account.name, style: titleStyleColorBlue,),
-              Text("\$ ${account.value}", style: titleStyleColorBlue,
+              Text("\$ ${(account.value).toStringAsFixed(0)}", style: titleStyleColorBlue,
                  overflow: TextOverflow.ellipsis,
               ),
             ],

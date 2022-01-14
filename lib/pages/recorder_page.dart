@@ -4,7 +4,6 @@ import 'package:finances/models/accounts.dart';
 import 'package:finances/models/category.dart';
 import 'package:finances/models/records.dart';
 import 'package:finances/provider/database.dart';
-import 'package:finances/utils/records.dart';
 import 'package:flutter/material.dart';
 
 class RecordedPage extends StatefulWidget {
@@ -172,7 +171,6 @@ class _RecordedPageState extends State<RecordedPage> {
       accountOriginSelected.value += value;
     }if(type == "gasto"){
       accountOriginSelected.value -= value;
-      updateBudgets(value, categorySelected);
     }
 
     if (type != "transfer"){

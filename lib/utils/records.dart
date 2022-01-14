@@ -15,4 +15,16 @@ void updateBudgets(double value, Category category) async {
         )
         );
     });
+
+  _getBudgets();
 }
+
+_getBudgets(){
+
+}
+
+// ir por cada presupuesto 
+// verificar los records que se unen con cada categoria
+// sumar los gastos y
+//actualizar los gastos de los últimos días teniendo en cuenta la fecha de corte
+
