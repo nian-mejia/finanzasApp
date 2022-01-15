@@ -1,3 +1,4 @@
+import 'package:finances/utils/date.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
@@ -50,18 +51,18 @@ _selectDate(BuildContext context, TextEditingController controller) async{
     initialDate: today, 
     firstDate: DateTime(today.year-1), 
     lastDate: DateTime(today.year + 50),
-    locale:  const Locale("es", "ES")  
+    locale:  const Locale("es", "ES"),  
   );
   
   if (datePicker != null){
-    controller.text = "${datePicker.year}-${datePicker.month}-${datePicker.day}";
+    controller.text = getDate(datePicker.toString());
   }
 }
 
 
 Padding getDataPicker(TextEditingController controller, 
   String label, BuildContext context){
-  
+
   return Padding(
     padding: padding,
     child: Column(      

@@ -26,7 +26,7 @@ class _RecordedPageState extends State<RecordedPage> {
   final categoryController = TextEditingController();
   final accountController = TextEditingController();
   final accountDestController = TextEditingController();
-  final datePickerController = TextEditingController();
+  final dateController =  TextEditingController(text: getDate(DateTime.now().toString()));
   late Category categorySelected;
   Account accountOriginSelected = Account("", 0, 0);
   Account accountDestSelected = Account("", 0, 0);
@@ -58,7 +58,7 @@ class _RecordedPageState extends State<RecordedPage> {
             child:
             ListView(
             children: [
-              getDataPicker(datePickerController, "Fecha", context),
+              getDataPicker(dateController, "Fecha", context),
               getTextFieldValue(valueController, "Valor"),
               getTextField(descriptionController, "Descripción"),
               (widget.title != "Transferencias") ? 
@@ -144,7 +144,7 @@ class _RecordedPageState extends State<RecordedPage> {
   }
 
   String _saveRecord() {
-    final date = getDate(datePickerController.text);
+    final date = getDate(dateController.text);
     final description =  descriptionController.text;
     double value  = 0;
     if (valueController.text.isNotEmpty){

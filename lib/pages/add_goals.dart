@@ -5,6 +5,7 @@ import 'package:finances/models/accounts.dart';
 import 'package:finances/models/goals.dart';
 import 'package:finances/models/cuotas.dart';
 import 'package:finances/provider/database.dart';
+import 'package:finances/utils/date.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -20,7 +21,7 @@ class _AddGoalsPageState extends State<AddGoalsPage> {
   final nameController = TextEditingController();
   final valueController = TextEditingController();
   final savedController = TextEditingController();
-  final dateController =  TextEditingController();
+  final dateController =  TextEditingController(text: getDate(DateTime.now().toString()));
 
   final space = const SizedBox(height: 15);
   cuotas defaultCouta = cuotas.Mensual;
