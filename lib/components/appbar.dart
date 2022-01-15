@@ -17,15 +17,16 @@ class AppbarPing extends StatelessWidget {
   }
 
   PreferredSizeWidget getAppBar() {
-  final appBar =  AppBar(title: const Text(title), backgroundColor: colorApp, automaticallyImplyLeading: false,);
+    final appBar =  AppBar(title: const Text(title), 
+      backgroundColor: colorApp, automaticallyImplyLeading: false,);
 
-  return currentIndex == 0 ? PreferredSize(
-    preferredSize: const Size.fromHeight(100.0),
-    child:  Material(
-      color: colorApp,
-      elevation: 20 ,
-      child: _getTitleAppBar()),)
-      : appBar;
+    return currentIndex == 0 ? PreferredSize(
+      preferredSize: const Size.fromHeight(100.0),
+      child:  Material(
+        color: colorApp,
+        elevation: 20 ,
+        child: _getTitleAppBar()),)
+        : appBar;
   }
 
     Widget _getTitleAppBar() {
