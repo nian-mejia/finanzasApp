@@ -21,7 +21,8 @@ class _AddGoalsPageState extends State<AddGoalsPage> {
   final nameController = TextEditingController();
   final valueController = TextEditingController();
   final savedController = TextEditingController();
-  final dateController =  TextEditingController(text: getDate(DateTime.now().toString()));
+  final dateController =  TextEditingController(
+    text: getDateFormated(DateTime.now().toString()));
 
   final space = const SizedBox(height: 15);
   cuotas defaultCouta = cuotas.Mensual;

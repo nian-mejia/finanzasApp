@@ -1,6 +1,6 @@
 import 'package:intl/intl.dart';
 
-String getDate(String text){
+String getDateFormated(String text){
   final date = DateFormat('yyyy-MM-dd').
       parse(text).toString();
   return _subtractDate(date);

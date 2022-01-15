@@ -55,7 +55,7 @@ _selectDate(BuildContext context, TextEditingController controller) async{
   );
   
   if (datePicker != null){
-    controller.text = getDate(datePicker.toString());
+    controller.text = getDateFormated(datePicker.toString());
   }
 }
 

@@ -6,6 +6,7 @@ import 'package:finances/components/wallet.dart';
 import 'package:finances/constants/titles.dart';
 import 'package:finances/models/user.dart';
 import 'package:finances/pages/recorder_page.dart';
+import 'package:finances/utils/records.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:sizer/sizer.dart';
@@ -24,7 +25,6 @@ class _InfoState extends State<InfoPage> {
   Widget build(BuildContext context) {
     List<Widget> _listViews = [_getBodyHome(), _getBodyInfo()];
     final user = widget.googleUser;
-
     return Scaffold(
       appBar: AppbarPing(currentIndex, user).getAppBar(),
       body: _listViews[currentIndex],
@@ -120,6 +120,8 @@ class _InfoState extends State<InfoPage> {
   }
 
   Widget _getBodyHome(){
+    updateBudgets();
+    
     return ListView(
       children: [
         Padding(

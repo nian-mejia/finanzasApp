@@ -45,7 +45,7 @@ Record recordfromJSon(Map<String, Object?> json){
 
 Future<List<Record>> getRecords() async{
   List<Record> responseRecords = [];
-  final last30Days = getDate(DateTime.now()
+  final last30Days = getDateFormated(DateTime.now()
     .add(const Duration(days: -30)).toString());
 
   Database db = await  DBProvider.db.database;
@@ -54,30 +54,6 @@ Future<List<Record>> getRecords() async{
     where: "date >= date(?)", 
     whereArgs: [last30Days], 
     orderBy: "date desc, id desc");
-  for (var element in records) {
-    responseRecords.add(recordfromJSon(element));
-  }
-  return responseRecords;
-}
-
-Future<List<Record>> getRecordsInRangeDayAndWasExpense(int day, int categoryID) async{
-  List<Record> responseRecords = [];
-  final currentMonth =  getDate(DateTime(DateTime.now().year, 
-    DateTime.now().month, day).toString());
-
-  final rangeMonth = getDate(DateTime(DateTime.now().year, 
-    DateTime.now().day >= day ? DateTime.now().month + 1 : 
-    DateTime.now().month - 1
-    , day).toString());
-
-  Database db = await  DBProvider.db.database;
-  List<Map<String, Object?>> records =  await 
-    db.query("records", 
-      where: 'category_id = ? AND type = "gasto" AND date BETWEEN date(?) AND date(?);', 
-      whereArgs: DateTime.now().day >= day ?  
-        [categoryID, currentMonth, rangeMonth] :
-        [categoryID, rangeMonth, currentMonth] ,
-        );
   for (var element in records) {
     responseRecords.add(recordfromJSon(element));
   }
