@@ -6,7 +6,9 @@ String getDate(String text){
   return _subtractDate(date);
 }
 
-String _subtractDate(String date){
+ String _subtractDate(String date){
   RegExp regExp = RegExp("\\d{4}-\\d{2}-\\d{2}");
-  return regExp.firstMatch(date).toString();
+  final match = regExp.firstMatch(date);
+  final value = match?.group(0);
+  return value!;
 }
