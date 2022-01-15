@@ -6,7 +6,6 @@ import 'package:finances/models/records.dart';
 import 'package:finances/provider/database.dart';
 import 'package:finances/utils/date.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class RecordedPage extends StatefulWidget {
 
@@ -177,19 +176,27 @@ class _RecordedPageState extends State<RecordedPage> {
 
     if (type != "transfer"){
       final record = Record(date, description, value, categorySelected.id, accountOriginSelected.id, null,  type);
-      DBProvider.db.database.then((db) => db.insert("records", record.toJson()));
-      DBProvider.db.database.then((db) => db.update("accounts", accountOriginSelected.toJson(),  where: "id = ${accountOriginSelected.id}"));
+      DBProvider.db.database.then((db) {
+        final batch = db.batch();
+        batch.insert("records", record.toJson());
+        batch.update("accounts", accountOriginSelected.toJson(),  where: "id = ${accountOriginSelected.id}");
+        batch.commit();
+      });
     }else{
-      final record = Record(date, description, value, categorySelected.id, accountOriginSelected.id, accountDestSelected.id, type);
-      DBProvider.db.database.then((db) => db.insert("records", record.toJson()));
-      accountOriginSelected.value -= value;
-      accountDestSelected.value += value;
-      DBProvider.db.database.then((db) => db.update("accounts", accountOriginSelected.toJson(), where: "id = ${accountOriginSelected.id}"));
-      DBProvider.db.database.then((db) => db.update("accounts", accountDestSelected.toJson(), where: "id = ${accountDestSelected.id}"));
+      final record = Record(date, description, value, null, accountOriginSelected.id, accountDestSelected.id, type);
+      DBProvider.db.database.then((db) {
+        final batch = db.batch();
+        batch.insert("records", record.toJson());
+        accountOriginSelected.value -= value;
+        accountDestSelected.value += value;
+        batch.update("accounts", accountOriginSelected.toJson(), where: "id = ${accountOriginSelected.id}");
+        batch.update("accounts", accountDestSelected.toJson(), where: "id = ${accountDestSelected.id}");
+        batch.commit();
+      });
+      
     }
 
     Navigator.pop(context);
-
     return "";
   }
 }
