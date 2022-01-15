@@ -105,7 +105,7 @@ class _AddAccountPageState extends State<AddAccountPage> {
 
     Account account = Account(name, value, visible);
     DBProvider.db.database.then((db) => db.insert("accounts", account.toJson()));
-    Navigator.popAndPushNamed(context, "info");
+    Navigator.pop(context, "OK");
     return false;
     }
 }

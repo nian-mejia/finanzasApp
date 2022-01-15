@@ -33,8 +33,20 @@ class AccountPage extends StatelessWidget {
       accounts = snapshoot.data as List<Account>; 
       if (accounts.isEmpty){
         return  Center(
-          child: Text("Por favor crea una cuenta primero", 
-          style: TextStyle(color: Colors.red, fontSize: 2.h),),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                onPressed: () async { 
+                  final message = await Navigator.pushNamed(context, "addAccount");
+                  if (message.toString() == "OK"){
+                    Navigator.pop(context);
+                  }
+                },
+                child: Text("Por favor crea una cuenta primero", 
+                  style: TextStyle(color: Colors.white, fontSize: 2.h),),)
+            ],
+          ),
         );
       }
 
