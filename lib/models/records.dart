@@ -2,7 +2,6 @@
 import 'package:finances/provider/database.dart';
 import 'package:finances/utils/date.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:sqflite/sqflite.dart';
 
 class Record{
@@ -79,7 +78,6 @@ Future<List<Record>> getRecordsInRangeDayAndWasExpense(int day, int categoryID) 
         [categoryID, currentMonth, rangeMonth] :
         [categoryID, rangeMonth, currentMonth] ,
         );
-
   for (var element in records) {
     responseRecords.add(recordfromJSon(element));
   }

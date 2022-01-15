@@ -6,14 +6,12 @@ import 'package:finances/components/wallet.dart';
 import 'package:finances/constants/titles.dart';
 import 'package:finances/models/user.dart';
 import 'package:finances/pages/recorder_page.dart';
-import 'package:finances/utils/records.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:sizer/sizer.dart';
 
 class InfoPage extends StatefulWidget {
   User? googleUser;
-
   InfoPage(User? this.googleUser, {Key? key}) : super(key: key);
 
   @override
@@ -122,7 +120,6 @@ class _InfoState extends State<InfoPage> {
   }
 
   Widget _getBodyHome(){
-    updateBudgets();
     return ListView(
       children: [
         Padding(

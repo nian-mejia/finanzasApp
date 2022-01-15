@@ -1,45 +1,43 @@
+
 import 'package:finances/models/budget_has_category.dart';
-import 'package:finances/models/budgets.dart';
-import 'package:finances/models/records.dart';
 import 'package:finances/provider/database.dart';
+import 'package:sqflite_common/sqlite_api.dart';
 
-void updateBudgets() async {
-  Map<int?, Budget> budgetsMap = {};
+Future<void> updateBudgets() async {
 
-  List<BudgetHasCategory> budgets = await getAllBudgetHasCategory();
-    budgets.forEach((e) async {
-      late int day;
-      if (!budgetsMap.containsKey(e.budget)){
-        final budget = await getBudgetByID(e.budget);
-        budgetsMap[budget.id] = budget;
-        day = budget.day;
-      }
-
-      // get records stay in range days
-      final listRecords = await getRecordsInRangeDayAndWasExpense(day, e.categtory);
-        
-      double totalValue = 0;
-      listRecords.forEach((record) { 
-          totalValue += record.value;
-      });
-      final budget = budgetsMap[e.budget];
-      budget!.gastado += totalValue;
-        
-    });
-
-    budgetsMap.forEach((key, budget) { 
-      _updateSaldoBudget(budget);
-    });
+  DBProvider.db.database.then((db) async {
+    db.rawUpdate(
+    '''
+      UPDATE budgets
+      SET gastado = (select sum(rc.value) as gastado
+      from
+      (SELECT * FROM records
+      WHERE category_id = 3
+      AND date BETWEEN date("2021-12-30") 
+      AND date("2022-01-30")) rc,
+      budget_has_category bc, budgets b
+      where  bc.budget = b.id and b.id = 2
+      and rc.category_id = bc.category)
+      where id = 2;
+    '''
+  );
+  });
 }
 
-void _updateSaldoBudget(Budget budget){
-  DBProvider.db.database.then((db) => 
-    db.update("budgets", budget.toJson()));
+void _updateSaldoBudget(Batch batch, BudgetHasCategory budget) {
+  batch.rawUpdate(
+    '''
+      UPDATE budgets
+      SET gastado = (select sum(rc.value) as gastado
+      from
+      (SELECT * FROM records
+      WHERE category_id = ${budget.categtory}
+      AND date BETWEEN date("2021-12-30") 
+      AND date("2022-01-30")) rc,
+      budget_has_category bc, budgets b
+      where  bc.budget = b.id and b.id = ${budget.budget}
+      and rc.category_id = bc.category)
+      where id = ${budget.budget};
+    '''
+  );
 }
-
-
-// ir por cada presupuesto 
-// verificar los records que se unen con cada categoria
-// sumar los gastos y
-//actualizar los gastos de los últimos días teniendo en cuenta la fecha de corte
-
