@@ -1,6 +1,7 @@
 
 import 'package:finances/provider/database.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:sqflite/sqflite.dart';
 
 class Record{
@@ -51,6 +52,28 @@ Future<List<Record>> getRecords() async{
     db.query("records", 
       where: "date >= date($last30DaysFormated)",
       orderBy: "id desc");
+  for (var element in records) {
+    responseRecords.add(recordfromJSon(element));
+  }
+  return responseRecords;
+}
+
+Future<List<Record>> getRecordsInRangeDayAndWasExpense(int day, int categoryID) async{
+  List<Record> responseRecords = [];
+  final today = DateTime.now();
+  String todayFormated = "${today.year}-${today.month}-$day";
+
+  final lastMonth = DateFormat('yyyy-MM-dd').parse(today.toString()).
+    add(const Duration(days: -30));
+  String lastMonthFormated = "${lastMonth.year}-${lastMonth.month}-$day";
+
+  Database db = await  DBProvider.db.database;
+  List<Map<String, Object?>> records =  await 
+    db.rawQuery(
+      '''select * from records where
+        category_id = $categoryID AND type = "gasto" AND
+        date BETWEEN strftime('%Y-%m-%d', ${lastMonthFormated.toString()}) 
+        AND strftime('%Y-%m-%d', ${todayFormated.toString()})''');
   for (var element in records) {
     responseRecords.add(recordfromJSon(element));
   }

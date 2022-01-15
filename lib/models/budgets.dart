@@ -59,3 +59,10 @@ Future<List<Budget>> getAllBudget() async{
   }
   return responseBudgets;
 }
+
+Future<Budget> getBudgetByID(int budgetID) async{
+  Database db = await  DBProvider.db.database;
+  List<Map<String, Object?>> budgets =  
+    await db.query("budgets", where: "id = $budgetID");
+  return Budget.fromJson(budgets.first);
+}

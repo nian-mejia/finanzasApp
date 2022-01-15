@@ -31,11 +31,11 @@ class BudgetHasCategory {
     };
 }
 
-Future<List<BudgetHasCategory>> getAllBudgetHasCategory(int categoryID) async{
+Future<List<BudgetHasCategory>> getAllBudgetHasCategory() async{
   List<BudgetHasCategory> responseBudgetHasCategory = [];
   Database db = await  DBProvider.db.database;
   List<Map<String, Object?>> budgetHasCategory =  
-    await db.query("budget_has_category", where: "category = $categoryID");
+    await db.query("budget_has_category");
   for (var element in budgetHasCategory) {
     responseBudgetHasCategory.add(BudgetHasCategory.fromJson(element));
   }

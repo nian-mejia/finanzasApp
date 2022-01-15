@@ -4,7 +4,9 @@ import 'package:finances/models/accounts.dart';
 import 'package:finances/models/category.dart';
 import 'package:finances/models/records.dart';
 import 'package:finances/provider/database.dart';
+import 'package:finances/utils/date.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class RecordedPage extends StatefulWidget {
 
@@ -99,9 +101,9 @@ class _RecordedPageState extends State<RecordedPage> {
               arguments:  (widget.title == "Transferencias") ? "all" : "");
             if (account != null){
               accountSelect.id = (account as Account).id;
-              accountSelect.name = (account as Account).name;
-              accountSelect.value = (account as Account).value;
-              accountSelect.visible = (account as Account).visible;
+              accountSelect.name = (account).name;
+              accountSelect.value = (account).value;
+              accountSelect.visible = (account).visible;
               controller.text = "${accountSelect.name} \$ ${accountSelect.value}";
             }
           },
@@ -142,7 +144,7 @@ class _RecordedPageState extends State<RecordedPage> {
   }
 
   String _saveRecord() {
-    final date = datePickerController.text;
+    final date = getDate(datePickerController.text);
     final description =  descriptionController.text;
     double value  = 0;
     if (valueController.text.isNotEmpty){

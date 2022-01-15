@@ -1,0 +1,12 @@
+import 'package:intl/intl.dart';
+
+String getDate(String text){
+  final date = DateFormat('yyyy-MM-dd').
+      parse(text).toString();
+  return _subtractDate(date);
+}
+
+String _subtractDate(String date){
+  RegExp regExp = RegExp("\\d{4}-\\d{2}-\\d{2}");
+  return regExp.firstMatch(date).toString();
+}

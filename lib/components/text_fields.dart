@@ -48,7 +48,7 @@ _selectDate(BuildContext context, TextEditingController controller) async{
   final datePicker = await showDatePicker(
     context: context, 
     initialDate: today, 
-    firstDate: DateTime(today.year), 
+    firstDate: DateTime(today.year-1), 
     lastDate: DateTime(today.year + 50),
     locale:  const Locale("es", "ES")  
   );
