@@ -1,5 +1,6 @@
 
 import 'package:finances/provider/database.dart';
+import 'package:finances/utils/date.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:sqflite/sqflite.dart';
@@ -45,13 +46,15 @@ Record recordfromJSon(Map<String, Object?> json){
 
 Future<List<Record>> getRecords() async{
   List<Record> responseRecords = [];
-  final last30Days = DateTime.now().add(const Duration(days: -30));
-  String last30DaysFormated = "${last30Days.year}-${last30Days.month}-${last30Days.day}";
+  final last30Days = getDate(DateTime.now()
+    .add(const Duration(days: -30)).toString());
+
   Database db = await  DBProvider.db.database;
   List<Map<String, Object?>> records =  await 
     db.query("records", 
-      where: "date >= date($last30DaysFormated)",
-      orderBy: "id desc");
+    where: "date >= date(?)", 
+    whereArgs: [last30Days], 
+    orderBy: "date desc, id desc");
   for (var element in records) {
     responseRecords.add(recordfromJSon(element));
   }
