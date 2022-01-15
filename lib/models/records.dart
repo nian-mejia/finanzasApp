@@ -63,20 +63,23 @@ Future<List<Record>> getRecords() async{
 
 Future<List<Record>> getRecordsInRangeDayAndWasExpense(int day, int categoryID) async{
   List<Record> responseRecords = [];
-  final today = DateTime.now();
-  String todayFormated = "${today.year}-${today.month}-$day";
+  final currentMonth =  getDate(DateTime(DateTime.now().year, 
+    DateTime.now().month, day).toString());
 
-  final lastMonth = DateFormat('yyyy-MM-dd').parse(today.toString()).
-    add(const Duration(days: -30));
-  String lastMonthFormated = "${lastMonth.year}-${lastMonth.month}-$day";
+  final rangeMonth = getDate(DateTime(DateTime.now().year, 
+    DateTime.now().day >= day ? DateTime.now().month + 1 : 
+    DateTime.now().month - 1
+    , day).toString());
 
   Database db = await  DBProvider.db.database;
   List<Map<String, Object?>> records =  await 
-    db.rawQuery(
-      '''select * from records where
-        category_id = $categoryID AND type = "gasto" AND
-        date BETWEEN strftime('%Y-%m-%d', ${lastMonthFormated.toString()}) 
-        AND strftime('%Y-%m-%d', ${todayFormated.toString()})''');
+    db.query("records", 
+      where: 'category_id = ? AND type = "gasto" AND date BETWEEN date(?) AND date(?);', 
+      whereArgs: DateTime.now().day >= day ?  
+        [categoryID, currentMonth, rangeMonth] :
+        [categoryID, rangeMonth, currentMonth] ,
+        );
+
   for (var element in records) {
     responseRecords.add(recordfromJSon(element));
   }
