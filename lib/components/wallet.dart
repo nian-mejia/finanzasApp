@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:finances/constants/button_style.dart';
 import 'package:finances/models/accounts.dart';
+import 'package:finances/utils/values.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
@@ -91,7 +92,7 @@ class _WalletComponentState extends State<WalletComponent> {
                 color: Colors.white,
               ),
               Text(account.name, style: titleStyleColorBlue,),
-              Text("\$ ${(account.value).toStringAsFixed(0)}", 
+              Text(formatValue(account.value), 
                 style: titleStyleColorBlue,
                  overflow: TextOverflow.ellipsis,
               ),

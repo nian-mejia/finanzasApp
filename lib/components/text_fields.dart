@@ -2,7 +2,7 @@ import 'package:finances/utils/date.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
-final padding = EdgeInsets.symmetric(horizontal: 5.w, vertical: 1.h);
+final padding = EdgeInsets.symmetric(horizontal: 4.w, vertical: 1.h);
 
 Padding getTextField(TextEditingController controller, String label) {
   return Padding(

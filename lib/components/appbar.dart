@@ -2,6 +2,7 @@ import 'package:finances/constants/button_style.dart';
 import 'package:finances/constants/titles.dart';
 import 'package:finances/models/accounts.dart';
 import 'package:finances/models/user.dart';
+import 'package:finances/utils/values.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
@@ -61,13 +62,12 @@ class AppbarPing extends StatelessWidget {
               const Icon(Icons.savings, size: 35,),
               SizedBox(width: 3.w,),
               FutureBuilder(
-                initialData: const Text("Saldo \$ 0"),
                 future: getTotal(),
                 builder: (context, snapshot) {
-                  if (snapshot.hasError){
+                  if (snapshot.hasError || snapshot.data == null){
                     return const Text("Saldo \$ 0");
                   }
-                  return Text("Saldo \$ ${snapshot.data}");
+                  return Text("Saldo ${formatValue(snapshot.data as double)}");
                 }),
             ]
         );
