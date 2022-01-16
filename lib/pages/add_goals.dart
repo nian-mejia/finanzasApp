@@ -121,7 +121,7 @@ class _AddGoalsPageState extends State<AddGoalsPage> {
     }
 
     if (dateController.text.isNotEmpty){
-      final today = DateTime.now();
+      final today = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
       final endDate = DateFormat('yyyy-MM-dd').parse(dateController.text);
       if (endDate.isBefore(today)){
         return "Fecha deseada no puede ser menor a la fecha de hoy";
