@@ -31,72 +31,53 @@ class _WalletComponentState extends State<WalletComponent> {
   }
 
   Widget _getAddAccount(){
-    return 
-    Padding(
-        padding: EdgeInsets.symmetric(horizontal: 3.0.w, vertical: 1.5.h),
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Row(
-              children: [
-              IconButton(
-                icon: const Icon(
-                  Icons.add_box,
-                  size : 30,
-                  color: Colors.white,
-                ),
-                onPressed: () {
-                  Navigator.pushNamed(context, 'addAccount').
-                  then((_) => setState(() {}));
-                }
-              ),
-            ],
-          ),
-        ),
-    );
+    return ListTile(
+    title: const Text("Nueva cuenta", 
+      style: buttonTextStyle),
+    onTap: (){
+      Navigator.pushNamed(context, "addAccount").
+      then((_) => setState(() {}));
+    },
+    leading: iconButton,
+  );
   }
 
   Widget _getGrid() {
-    List<Widget> accounts = [];
-    List<Account> data = [];
     return  FutureBuilder(
-            builder: (context, snapshot) {
-              if (snapshot.hasError){
-                return const SizedBox();
-              }
-              try{
-                data  =  snapshot.data as List<Account>;
-              }on TypeError{
-                return const SizedBox();
+        builder: (context, snapshot) {
+          if (snapshot.hasError || snapshot.data == null){
+            return const SizedBox();
+          }
+          
+          List<Account> data  =  snapshot.data as List<Account>;
+          List<Widget> accounts = [];
 
-              }
-              if (data.isEmpty){
-                return const SizedBox();
-              }
-              for (var item in data) {
-                accounts.add(createConteiner(item));
-              }
-              
-              return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: GridView.count(
-                  shrinkWrap: true, // use this
-                  crossAxisSpacing: 5.w,
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 1.h,
-                  childAspectRatio: (50.w /  10.h),
-                  children: accounts,
-                  ),
-              );
-              
-            },
-            future: getAccounts(),
+          for (var item in data) {
+            accounts.add(createConteiner(item));
+          }
+          if (accounts.isEmpty){
+            return const SizedBox();
+          }
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: GridView.count(
+              shrinkWrap: true, // use this
+              crossAxisSpacing: 5.w,
+              crossAxisCount: 2,
+              mainAxisSpacing: 1.h,
+              childAspectRatio: (50.w /  10.h),
+              children: accounts,
+              ),
+          );
+          
+        },
+        future: getAccounts(),
      );
   }
 
   Widget createConteiner(Account account){
-    final color = Colors.primaries[Random().nextInt(12)];
+    final color = Colors.primaries[account.id > 12 ? 
+      Random().nextInt(12) : account.id];
     final titleStyleColorBlue = TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: color.shade50);
     return 
       Container(
@@ -113,7 +94,8 @@ class _WalletComponentState extends State<WalletComponent> {
                 color: Colors.white,
               ),
               Text(account.name, style: titleStyleColorBlue,),
-              Text("\$ ${(account.value).toStringAsFixed(0)}", style: titleStyleColorBlue,
+              Text("\$ ${(account.value).toStringAsFixed(0)}", 
+                style: titleStyleColorBlue,
                  overflow: TextOverflow.ellipsis,
               ),
             ],
