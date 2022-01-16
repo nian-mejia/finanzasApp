@@ -65,7 +65,7 @@ class _AddAccountPageState extends State<AddAccountPage> {
 
   Widget _excludeField(){
     return Padding(
-    padding: EdgeInsets.symmetric(horizontal: 3.0.w, vertical: 2.0.h),
+    padding: padding,
     child: Row(
       children: [
         const Text("Incluir en el saldo total", style: 

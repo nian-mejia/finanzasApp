@@ -4,7 +4,7 @@ String formatValue(double value){
   if (value == 0.0){
     return "0";
   }
-  if (value.toString().length < 10){
+  if (value.toString().length < 9){
     NumberFormat numberFormat =
     NumberFormat.currency(locale: "ar",
         symbol: "\$", decimalDigits: 0);

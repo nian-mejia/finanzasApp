@@ -1,8 +1,9 @@
+import 'package:finances/constants/button_style.dart';
 import 'package:finances/utils/date.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
-final padding = EdgeInsets.symmetric(horizontal: 4.w, vertical: 1.h);
+final padding = EdgeInsets.symmetric(horizontal: 4.w, vertical: 1.5.h);
 
 Padding getTextField(TextEditingController controller, String label) {
   return Padding(
@@ -28,7 +29,7 @@ Padding getTextFieldValue(TextEditingController controller, String label) {
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label, style: const TextStyle(fontWeight: FontWeight.bold),),
+        Text(label, style: titleStyle,),
         TextFormField(
             controller: controller,
             keyboardType: TextInputType.number,

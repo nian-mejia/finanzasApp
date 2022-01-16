@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:finances/models/accounts.dart';
+import 'package:finances/utils/format_value.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
@@ -63,7 +64,7 @@ class AccountPage extends StatelessWidget {
                     children: [
                       Text(accounts[index].name, 
                         style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
-                      Text("\$ ${accounts[index].value}"),
+                      Text(formatValue(accounts[index].value)),
                     ],
                   ),
                   leading: TextButton(

@@ -3,6 +3,7 @@ import 'package:finances/constants/titles.dart';
 import 'package:finances/models/cuotas.dart';
 import 'package:finances/models/goals.dart';
 import 'package:finances/utils/date.dart';
+import 'package:finances/utils/format_value.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
@@ -62,7 +63,7 @@ class _GoalsGraphState extends State<GoalsGraph> {
       child: Column(
         children: [
           Text("Cantidad mínima ${getCuotaName(card)} para llegar a la meta"),
-          Text("COP ${accountMin.toStringAsFixed(0)}", style: titleStyleBigColorBlue,),
+          Text("COP ${formatValue(accountMin)}", style: titleStyleBigColorBlue,),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -96,7 +97,7 @@ class _GoalsGraphState extends State<GoalsGraph> {
                     ),
                     const SizedBox(height: 15,),
                     Text(
-                      "${card.moneySaved.toStringAsFixed(0)} / ${card.moneyEnd.toStringAsFixed(0)}"
+                      "${formatValue(card.moneySaved)} / ${formatValue(card.moneyEnd)}"
                     ),
                     const Text("COP")
                   ],

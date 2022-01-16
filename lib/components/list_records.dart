@@ -1,6 +1,7 @@
 import 'package:finances/models/accounts.dart';
 import 'package:finances/models/category.dart';
 import 'package:finances/models/records.dart';
+import 'package:finances/utils/format_value.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
@@ -104,7 +105,7 @@ class _RecordsListState extends State<RecordsList> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        Text("COP ${(data.value).toStringAsFixed(0)}", style: TextStyle(
+        Text("COP ${formatValue(data.value)}", style: TextStyle(
           color: colorsRecord[data.type], overflow: TextOverflow.ellipsis
         ),),
         Text(data.date),

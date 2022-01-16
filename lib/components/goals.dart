@@ -2,6 +2,7 @@ import 'package:finances/constants/button_style.dart';
 import 'package:finances/constants/titles.dart';
 import 'package:finances/models/goals.dart';
 import 'package:finances/pages/goals_graph.dart';
+import 'package:finances/utils/format_value.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
@@ -84,21 +85,14 @@ class _GoalsPageState extends State<GoalsPage> {
   }
   _getFooter(Goal goal){
 
-    String ahorrado = "0";
-
-    if (goal.moneySaved != 0){
-      ahorrado = goal.moneySaved.toStringAsFixed(0);
-    }
-
     return Padding(
       padding: const EdgeInsets.symmetric(vertical : 8.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text("Ahorrado \$ $ahorrado", 
+          Text("Ahorrado ${formatValue(goal.moneySaved)}", 
               style: const TextStyle(color: Colors.green),),
-          Text("Objetivo \$ ${goal.moneyEnd.toStringAsFixed(0)}")
-          // TODO: hacer que el dinero tenga las seraciones persos colombianos
+          Text("Objetivo ${formatValue(goal.moneyEnd)}")
         ],
       ),
     );  

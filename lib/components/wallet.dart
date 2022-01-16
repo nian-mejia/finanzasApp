@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:finances/constants/button_style.dart';
 import 'package:finances/models/accounts.dart';
-import 'package:finances/utils/values.dart';
+import 'package:finances/utils/format_value.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 

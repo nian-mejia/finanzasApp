@@ -1,5 +1,6 @@
 import 'package:finances/constants/button_style.dart';
 import 'package:finances/models/budgets.dart';
+import 'package:finances/utils/format_value.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
@@ -83,11 +84,7 @@ Row _getHeaders(element) {
   final text = Text(element.name, 
   style:  const TextStyle(fontWeight: FontWeight.bold),);
   
-  final gastado = element.gastado == 0 ? "0" :
-                  element.gastado.toStringAsFixed(0);
-  
-  final total = element.totalMoney.toStringAsFixed(0);
-  final saldo = Text("$gastado / $total");
+  final saldo = Text("${formatValue(element.gastado)} / ${formatValue(element.totalMoney)}");
   
   final headers = Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
