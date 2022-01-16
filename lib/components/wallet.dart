@@ -15,7 +15,7 @@ class WalletComponent extends StatefulWidget {
 
 class _WalletComponentState extends State<WalletComponent> {
 
-  final space = SizedBox(height: 10.h,);
+  final space = SizedBox(height: 1.h,);
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -24,6 +24,7 @@ class _WalletComponentState extends State<WalletComponent> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text("CUENTAS", style: titleStyle),
+        space,
         _getGrid(),
         _getAddAccount(),
       ],
@@ -58,18 +59,14 @@ class _WalletComponentState extends State<WalletComponent> {
           if (accounts.isEmpty){
             return const SizedBox();
           }
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: GridView.count(
+          return GridView.count(
               shrinkWrap: true, // use this
               crossAxisSpacing: 5.w,
               crossAxisCount: 2,
               mainAxisSpacing: 1.h,
-              childAspectRatio: (50.w /  10.h),
+              childAspectRatio: (43.w /  10.h),
               children: accounts,
-              ),
-          );
-          
+          );          
         },
         future: getAccounts(),
      );
@@ -86,7 +83,7 @@ class _WalletComponentState extends State<WalletComponent> {
           color: color,
         ),
         child:  Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children:  [
                 const Icon(
                 Icons.payment_rounded,
