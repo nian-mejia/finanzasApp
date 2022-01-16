@@ -12,3 +12,9 @@ String getDateFormated(String text){
   final value = match?.group(0);
   return value!;
 }
+
+bool isBeforeToday(String date){
+    final today = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
+    final endDate = DateFormat('yyyy-MM-dd').parse(date);
+    return endDate.isBefore(today);
+}

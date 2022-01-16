@@ -1,6 +1,8 @@
 import 'package:finances/constants/button_style.dart';
+import 'package:finances/constants/titles.dart';
 import 'package:finances/models/cuotas.dart';
 import 'package:finances/models/goals.dart';
+import 'package:finances/utils/date.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
@@ -41,13 +43,15 @@ class _GoalsGraphState extends State<GoalsGraph> {
   }
 
   Widget _getInfoAboutDate(Goal card){
-
-    final today = DateTime.now();
+    bool isTimeOutDate = isBeforeToday(card.endDate);
+    final today = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
     final endDate = DateFormat('yyyy-MM-dd').parse(card.endDate);
-    bool  isTimeOutDate = endDate.isBefore(today);
-
     final duration = endDate.difference(today);
-    final nCuotas = duration.inDays / getNumber(card);
+    var nCuotas = duration.inDays / getNumber(card);
+    if (nCuotas == 0){
+      nCuotas = 1;
+    }
+
     double accountMin = 0;
     if (card.moneyEnd > card.moneySaved){
       accountMin = ( card.moneyEnd - card.moneySaved) / nCuotas; 
@@ -68,7 +72,6 @@ class _GoalsGraphState extends State<GoalsGraph> {
               isTimeOutDate &&  accountMin != 0 ? 
               const Text("1", style: titleStyleBigColorRed,):
               accountMin == 0 ? const Text("0", style: titleStyleBigColorBlue,) : 
-              nCuotas.round() == 0 ? const Text("1", style: titleStyleBigColorBlue,) :
               Text("${nCuotas.round()}", style: titleStyleBigColorBlue,),
             ],
           ),
@@ -103,29 +106,29 @@ class _GoalsGraphState extends State<GoalsGraph> {
               );
   }
 
-  Row _getHeader(Goal card){
-    final today = DateTime.now();
-    final endDate = DateFormat('yyyy-MM-dd').parse(card.endDate);
-    bool  isTimeOutDate = endDate.isBefore(today);
-    return Row(
-      children: [
-        const CircleAvatar(
-          backgroundImage: 
-          NetworkImage("https://thumbs.dreamstime.com/b/goals-icon-vector-red-target-arrow-achievement-concept-illustration-148419541.jpg"),
-          radius: 34,),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(card.title, style: titleStyleBig,),
-              isTimeOutDate ? 
-              Text("${card.endDate} CADUCADO", style: titleStyleBigColorRed,)
-              : Text("Fecha limite ${card.endDate}"),
-            ],
-          ),
-        )  
-      ],
+  Widget _getHeader(Goal card){
+
+    bool  isTimeOutDate = isBeforeToday(card.endDate);
+    return Padding(
+      padding: const EdgeInsets.all(15.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Icon(Icons.emoji_events, size:50, color: colorSelectAndButton),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(card.title, style: titleStyleBig,),
+                isTimeOutDate ? 
+                Text("${card.endDate} CADUCADO", style: titleStyleBigColorRed,)
+                : Text("Fecha limite ${card.endDate}"),
+              ],
+            ),
+          )  
+        ],
+      ),
     );
   }
 }

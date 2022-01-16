@@ -118,8 +118,7 @@ class _GoalsPageState extends State<GoalsPage> {
   Row _getHeader(Goal goal){
     return Row(
       children: [
-        const Icon(Icons.emoji_events, size:35, color: colorSelectAndButton) 
-        ,
+        const Icon(Icons.emoji_events, size:35, color: colorSelectAndButton),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10.0),
           child: Column(

@@ -120,12 +120,8 @@ class _AddGoalsPageState extends State<AddGoalsPage> {
       return "El valor guardado no puede ser mayor al total de la meta.";
     }
 
-    if (dateController.text.isNotEmpty){
-      final today = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
-      final endDate = DateFormat('yyyy-MM-dd').parse(dateController.text);
-      if (endDate.isBefore(today)){
-        return "Fecha deseada no puede ser menor a la fecha de hoy";
-      }
+    if (isBeforeToday(dateController.text)){
+      return "Fecha deseada no puede ser menor a la fecha de hoy";
     }
 
     final newGoal = Goal(name, dateController.text, 
