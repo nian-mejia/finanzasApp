@@ -43,14 +43,12 @@ class _GoalsPageState extends State<GoalsPage> {
   }
 
   Widget _getGoalsByList() {
-    List<Card> response = [];
-    List<Goal> goals  = [];
     return FutureBuilder(
-      initialData: goals,
       future: getGoals(),
       builder: (context, snapshoot){
+        List<Card> response = [];
         if (snapshoot.hasData){
-          goals  =  snapshoot.data as List<Goal>;
+          List<Goal> goals   =  snapshoot.data as List<Goal>;
           goals.forEach((goal) {
             final cardTemp = _getCard(goal);
             response.add(cardTemp);
