@@ -77,27 +77,33 @@ class _WalletComponentState extends State<WalletComponent> {
     final color = Colors.primaries[account.id > 12 ? 
       Random().nextInt(12) : account.id];
     final titleStyleColorBlue = TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: color.shade50);
-    return 
-      Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: color,
-        ),
-        child:  Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children:  [
-                const Icon(
-                Icons.payment_rounded,
-                size : 25,
-                color: Colors.white,
+    return InkWell(
+          onTap: () {
+            Navigator.pushNamed(context, "addAccount", arguments: account).
+            then((_) => setState(() {}));
+          },
+          child: 
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: color,
+              ), 
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children:  [
+                        const Icon(
+                        Icons.payment_rounded,
+                        size : 25,
+                        color: Colors.white,
+                      ),
+                      Text(account.name, style: titleStyleColorBlue,),
+                      Text(formatValue(account.value), 
+                        style: titleStyleColorBlue,
+                          overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
+                  ),
               ),
-              Text(account.name, style: titleStyleColorBlue,),
-              Text(formatValue(account.value), 
-                style: titleStyleColorBlue,
-                 overflow: TextOverflow.ellipsis,
-              ),
-            ],
-          ),
-      );
-}
+        );
+    }
 }

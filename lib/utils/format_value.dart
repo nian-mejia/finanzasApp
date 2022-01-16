@@ -2,7 +2,7 @@ import 'package:intl/intl.dart';
 
 String formatValue(double value){
   if (value == 0.0){
-    return "0";
+    return "\$ 0";
   }
   if (value.toString().length < 9){
     NumberFormat numberFormat =

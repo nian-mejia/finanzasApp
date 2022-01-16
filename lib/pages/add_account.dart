@@ -5,7 +5,6 @@ import 'package:finances/models/accounts.dart';
 import 'package:finances/models/cuotas.dart';
 import 'package:finances/provider/database.dart';
 import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
 
 class AddAccountPage extends StatefulWidget {
   AddAccountPage({Key? key}) : super(key: key);
@@ -19,22 +18,29 @@ class _AddAccountPageState extends State<AddAccountPage> {
   final nameController = TextEditingController();
   final valueController = TextEditingController();
   bool isVisible = true;
+  bool setInfo = false;
 
   final space = const SizedBox(height: 15);
   cuotas defaultCouta = cuotas.Mensual;
   final _formKey = GlobalKey<FormState>();
 
+
   @override
   Widget build(BuildContext context) {
+    final updateAccount = ModalRoute.of(context)?.settings.arguments;
+
+    setInformation(updateAccount);
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Nueva cuenta"),
+        title: updateAccount == null ? 
+          const Text("Nueva cuenta") : const Text("Actualizar cuenta"),
         actions: [
           TextButton(onPressed: 
             (){
               // Validate returns true if the form is valid, or false otherwise.
               if (_formKey.currentState!.validate()) {
-                if (_saveAccount()){
+                if (_saveAccount(updateAccount)){
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(backgroundColor: colorApp,
                     content: Text('El valor debe ser númerico y sin puntos.', 
@@ -42,7 +48,8 @@ class _AddAccountPageState extends State<AddAccountPage> {
                   );
                 }
               }
-            }, child: const Text("Guardar")),
+            }, child: updateAccount == null ? 
+              const Text("Guardar") : const Text("Actualizar")),
         ]
       ),
       body: Padding(
@@ -80,7 +87,7 @@ class _AddAccountPageState extends State<AddAccountPage> {
     ));
   }
   
-  bool _saveAccount(){
+  bool _saveAccount(Object? updateAccount){
     double value = 0;
     String name  = "Account";
     int visible = 1;
@@ -104,8 +111,28 @@ class _AddAccountPageState extends State<AddAccountPage> {
     }
 
     Account account = Account(name, value, visible);
-    DBProvider.db.database.then((db) => db.insert("accounts", account.toJson()));
+    if (!setInfo){
+      // if setInfo is false mean the method should be create account
+      DBProvider.db.database.then((db) => db.insert("accounts", account.toJson()));
+    }else{
+      account.id = (updateAccount as Account).id;
+      DBProvider.db.database.then((db) => 
+        db.update("accounts", account.toJson(), where:  "id = ?", whereArgs: [account.id]));
+    }
     Navigator.pop(context, "OK");
     return false;
     }
+
+  void setInformation(Object? updateAccount) {
+    if (!setInfo){
+        if (updateAccount != null){
+        Account account = updateAccount as Account;
+        nameController.text = account.name;
+        valueController.text = account.value == 0? "" : 
+          account.value.toString().replaceFirst(".0", "") ;
+        isVisible = account.visible == 1 ? true : false;
+        setInfo = true;
+      }
+    }
+  }
 }
