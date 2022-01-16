@@ -1,4 +1,5 @@
 import 'package:finances/constants/button_style.dart';
+import 'package:finances/constants/titles.dart';
 import 'package:finances/models/goals.dart';
 import 'package:finances/pages/goals_graph.dart';
 import 'package:flutter/material.dart';
@@ -46,7 +47,7 @@ class _GoalsPageState extends State<GoalsPage> {
     return FutureBuilder(
       future: getGoals(),
       builder: (context, snapshoot){
-        List<Card> response = [];
+        List<Widget> response = [];
         if (snapshoot.hasData){
           List<Goal> goals   =  snapshoot.data as List<Goal>;
           goals.forEach((goal) {
@@ -61,10 +62,9 @@ class _GoalsPageState extends State<GoalsPage> {
       },);
   }
 
-  Card _getCard(Goal goal){
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
+  Widget _getCard(Goal goal){
+    return Padding(
+        padding: const EdgeInsets.all(6.0),
         child: InkWell(
           onTap: () {
             Navigator.push(context, 
@@ -79,7 +79,7 @@ class _GoalsPageState extends State<GoalsPage> {
             _getFooter(goal),
           ],
         ),
-      ),)
+      )
     );
   }
   _getFooter(Goal goal){
@@ -118,11 +118,10 @@ class _GoalsPageState extends State<GoalsPage> {
   Row _getHeader(Goal goal){
     return Row(
       children: [
-        const CircleAvatar(backgroundImage:
-        NetworkImage("https://thumbs.dreamstime.com/b/goals-icon-vector-red-target-arrow-achievement-concept-illustration-148419541.jpg"),
-        ),
+        const Icon(Icons.emoji_events, size:35, color: colorSelectAndButton) 
+        ,
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
