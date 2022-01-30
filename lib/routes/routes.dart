@@ -14,7 +14,7 @@ import 'package:flutter/material.dart';
 Map<String, WidgetBuilder> routes  = {
   "addPresupuesto" : (context) => AddPresupuestoPage(),
   "addGoals" : (context) => AddGoalsPage(),
-  "addAccount" : (context) => AddAccountPage(),
+  "addAccount" : (context) => const AddAccountPage(),
   "info" : (context) => InfoPage(userGlobal),
   "login": (context) => const LoginPage(),
   "loading": (context) => LoadingPage(),

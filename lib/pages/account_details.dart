@@ -6,9 +6,14 @@ import 'package:finances/provider/database.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
-class BudgetDetails extends StatelessWidget {
+class BudgetDetails extends StatefulWidget {
   const BudgetDetails({Key? key}) : super(key: key);
-  
+
+  @override
+  State<BudgetDetails> createState() => _BudgetDetailsState();
+}
+
+class _BudgetDetailsState extends State<BudgetDetails> {
   @override
   Widget build(BuildContext context) {
     final updateAccount = ModalRoute.of(context)?.settings.arguments;
@@ -31,7 +36,7 @@ class BudgetDetails extends StatelessWidget {
 
   Padding _getAccount(Object? updateAccount) {
     return Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 3.h),
+          padding: EdgeInsets.symmetric(horizontal: 26.w, vertical: 3.h),
           child: drawAccount(Colors.blue, updateAccount as Account),
         );
   }
@@ -50,8 +55,10 @@ class BudgetDetails extends StatelessWidget {
 
   Widget _editAccount(BuildContext context, Object? updateAccount) {
     return 
-    IconButton(onPressed: ()=> 
-        Navigator.popAndPushNamed(context, "addAccount", arguments: updateAccount), 
+    IconButton(onPressed: (){
+        Navigator.pushNamed(context, "addAccount", 
+          arguments: updateAccount).then((_) => Navigator.pop(context));
+      }, 
       icon: const Icon(Icons.edit, color: Colors.blue, size: 25,),);
   }
 

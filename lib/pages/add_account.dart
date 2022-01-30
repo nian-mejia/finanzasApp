@@ -124,7 +124,8 @@ class _AddAccountPageState extends State<AddAccountPage> {
       account.id = (updateAccount as Account).id;
       final record = Record(date, description, diffValue, null, account.id,null, type);
       DBProvider.db.database.then((db) {
-        db.update("accounts", account.toJson(), where:  "id = ?", whereArgs: [account.id]);
+        db.update("accounts", account.toJson(), where:  "id = ?", 
+        whereArgs: [account.id]);
         db.insert("records", record.toJson());
       } 
       );
