@@ -81,4 +81,5 @@ Map<String, Color>  colorsRecord = {
   "ingreso": Colors.green,
   "gasto": Colors.red,
   "transfer": Colors.cyan,
+  "readjustment": Colors.amber,
 };

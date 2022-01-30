@@ -3,11 +3,13 @@ import 'package:finances/components/text_fields.dart';
 import 'package:finances/constants/titles.dart';
 import 'package:finances/models/accounts.dart';
 import 'package:finances/models/cuotas.dart';
+import 'package:finances/models/records.dart';
 import 'package:finances/provider/database.dart';
+import 'package:finances/utils/date.dart';
 import 'package:flutter/material.dart';
 
 class AddAccountPage extends StatefulWidget {
-  AddAccountPage({Key? key}) : super(key: key);
+  const AddAccountPage({Key? key}) : super(key: key);
 
   @override
   _AddAccountPageState createState() => _AddAccountPageState();
@@ -17,6 +19,7 @@ class _AddAccountPageState extends State<AddAccountPage> {
 
   final nameController = TextEditingController();
   final valueController = TextEditingController();
+  double initValue = 0;
   bool isVisible = true;
   bool setInfo = false;
 
@@ -114,9 +117,17 @@ class _AddAccountPageState extends State<AddAccountPage> {
       // if setInfo is false mean the method should be create account
       DBProvider.db.database.then((db) => db.insert("accounts", account.toJson()));
     }else{
+      final date = getDateFormated(DateTime.now().toString());
+      const description = "Reajuste";
+      final diffValue = account.value - initValue;
+      const type = "readjustment";
       account.id = (updateAccount as Account).id;
-      DBProvider.db.database.then((db) => 
-        db.update("accounts", account.toJson(), where:  "id = ?", whereArgs: [account.id]));
+      final record = Record(date, description, diffValue, null, account.id,null, type);
+      DBProvider.db.database.then((db) {
+        db.update("accounts", account.toJson(), where:  "id = ?", whereArgs: [account.id]);
+        db.insert("records", record.toJson());
+      } 
+      );
     }
     Navigator.pop(context, "OK");
     return false;
@@ -127,8 +138,10 @@ class _AddAccountPageState extends State<AddAccountPage> {
         if (updateAccount != null){
         Account account = updateAccount as Account;
         nameController.text = account.name;
-        valueController.text = account.value == 0? "" : 
+        valueController.text = account.value == 0 ? "" : 
           account.value.toString().replaceFirst(".0", "") ;
+
+        initValue = account.value;
         isVisible = account.visible == 1 ? true : false;
         setInfo = true;
       }

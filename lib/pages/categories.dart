@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:finances/models/category.dart';
 import 'package:finances/components/icon.dart';
 import 'package:flutter/material.dart';
