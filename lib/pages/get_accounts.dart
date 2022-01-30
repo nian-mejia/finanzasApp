@@ -77,7 +77,18 @@ class AccountPage extends StatelessWidget {
                       color: Colors.white,
                       size: 25,
                     )),
-                    onTap: () => Navigator.pop(context, accounts[index]),
+                  trailing:  accounts[index].visible == 1 ? SizedBox(
+                    width: 20.w,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: const [
+                        Text("Privada"),
+                        Icon(Icons.lock_outline, size: 16,)
+                      ],
+                    ),
+                  ) : const SizedBox(),
+                  onTap: () => Navigator.pop(context, accounts[index]),
                   ),
                   const Divider(),
               ],

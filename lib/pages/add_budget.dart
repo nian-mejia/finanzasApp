@@ -60,6 +60,14 @@ class _AddPresupuestoPageState extends State<AddPresupuestoPage> {
     int budgetID = await DBProvider.db.database.then((db) => 
       db.insert("budgets", newBudget.toJson()));
 
+    if (categories.isEmpty){
+      DBProvider.db.database.then((db) => 
+      db.insert("budget_has_category", {
+        "budget" : budgetID,
+        "category": "11",
+      }));
+    }
+
     categories.forEach((category) {
       DBProvider.db.database.then((db) => 
       db.insert("budget_has_category", {
@@ -79,7 +87,8 @@ class _AddPresupuestoPageState extends State<AddPresupuestoPage> {
               children: [
                   const Text("Categoría", style: 
                   TextStyle(fontWeight: FontWeight.bold)),
-                  categories.isEmpty ? _getIconAdd() :  _drawCategories(categories),
+                  categories.isEmpty ? _getIconAdd() :  
+                    _drawCategories(categories),
               ]
               )
             );

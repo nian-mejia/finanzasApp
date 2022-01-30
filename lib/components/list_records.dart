@@ -1,10 +1,6 @@
 import 'package:finances/components/draw_records.dart';
-import 'package:finances/models/accounts.dart';
-import 'package:finances/models/category.dart';
 import 'package:finances/models/records.dart';
-import 'package:finances/utils/format_value.dart';
 import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
 
 class RecordsList extends StatefulWidget {
   RecordsList({Key? key}) : super(key: key);

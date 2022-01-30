@@ -31,8 +31,8 @@ class Budget {
       
       final budget =  Budget(
         name: json["name"],
-        totalMoney: double.parse(json["total_money"].toString()),
-        gastado: double.parse(json["gastado"].toString()),
+        totalMoney: double.tryParse(json["total_money"].toString()) ?? 00,
+        gastado: double.tryParse(json["gastado"].toString()) ?? 0,
         day: json["day"],
     );
 
