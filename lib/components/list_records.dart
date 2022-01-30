@@ -24,12 +24,15 @@ class _RecordsListState extends State<RecordsList> {
           return const SizedBox();
         }
         data = (snapshoot.data as List<Record>);
-        return ListView.builder(
-          shrinkWrap: true,
-          itemCount: data.length,
-          itemBuilder: (context, index){
-            return drawRecord(data[index]);
-          });
+        return Container(
+          child: ListView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: data.length,
+            itemBuilder: (context, index){
+              return drawRecord(data[index]);
+            }),
+        );
       });   
   }
 
