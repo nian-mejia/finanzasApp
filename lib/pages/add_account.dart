@@ -28,13 +28,12 @@ class _AddAccountPageState extends State<AddAccountPage> {
   @override
   Widget build(BuildContext context) {
     final updateAccount = ModalRoute.of(context)?.settings.arguments;
-
     setInformation(updateAccount);
 
     return Scaffold(
       appBar: AppBar(
         title: updateAccount == null ? 
-          const Text("Nueva cuenta") : const Text("Detalles de cuenta"),
+          const Text("Nueva cuenta") : const Text("Actualizar cuenta"),
         actions: [
           TextButton(onPressed: 
             (){
@@ -48,8 +47,8 @@ class _AddAccountPageState extends State<AddAccountPage> {
                   );
                 }
               }
-            }, child: updateAccount == null ? 
-              const Text("Guardar") : const Text("Actualizar")),
+            },  
+            child: const Text("Guardar")),
         ]
       ),
       body: Padding(
@@ -63,8 +62,6 @@ class _AddAccountPageState extends State<AddAccountPage> {
               getTextField(nameController, "Nombre de la cuenta"),
               getTextFieldValue(valueController, "Saldo inicial"),
               _excludeField(),
-              updateAccount != null ? 
-              _deleteAccount(updateAccount) : const SizedBox(),
             ],
         ),
         ),
@@ -136,20 +133,5 @@ class _AddAccountPageState extends State<AddAccountPage> {
         setInfo = true;
       }
     }
-  }
-
-  Widget _deleteAccount(Object? updateAccount) {
-    return TextButton(onPressed: (){
-      final account = updateAccount as Account;
-      DBProvider.db.database.then((db) => 
-        db.delete("accounts", where:  "id = ?", whereArgs: [account.id]));
-        Navigator.pop(context);
-    }, 
-      child:  Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: const[
-          Icon(Icons.delete, color: Colors.red, size: 25,),
-        ],
-      ));
   }
 }

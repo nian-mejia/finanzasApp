@@ -1,8 +1,8 @@
 import 'dart:math';
 
+import 'package:finances/components/accounts.dart';
 import 'package:finances/constants/button_style.dart';
 import 'package:finances/models/accounts.dart';
-import 'package:finances/utils/format_value.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
@@ -76,34 +76,13 @@ class _WalletComponentState extends State<WalletComponent> {
   Widget createConteiner(Account account){
     final color = Colors.primaries[account.id > 12 ? 
       Random().nextInt(12) : account.id];
-    final titleStyleColorBlue = TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: color.shade50);
     return InkWell(
           onTap: () {
-            Navigator.pushNamed(context, "addAccount", arguments: account).
+            Navigator.pushNamed(context, "accountsDetails", arguments: account).
             then((_) => setState(() {}));
           },
           child: 
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: color,
-              ), 
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children:  [
-                        const Icon(
-                        Icons.payment_rounded,
-                        size : 25,
-                        color: Colors.white,
-                      ),
-                      Text(account.name, style: titleStyleColorBlue,),
-                      Text(formatValue(account.value), 
-                        style: titleStyleColorBlue,
-                          overflow: TextOverflow.ellipsis,
-                      ),
-                    ],
-                  ),
-              ),
+            drawAccount(color, account),
         );
     }
 }

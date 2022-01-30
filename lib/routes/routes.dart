@@ -1,4 +1,5 @@
 import 'package:finances/models/user.dart';
+import 'package:finances/pages/account_details.dart';
 import 'package:finances/pages/add_account.dart';
 import 'package:finances/pages/add_goals.dart';
 import 'package:finances/pages/add_budget.dart';
@@ -19,6 +20,7 @@ Map<String, WidgetBuilder> routes  = {
   "loading": (context) => LoadingPage(),
   "categories": (context) => const CategoriePage(),
   "accounts": (context) => const AccountPage(),
+  "accountsDetails": (context) => const BudgetDetails(),
   "categories_with_radios": (context) => const CategorieWithRadiuosButtonPage(),
 };
 

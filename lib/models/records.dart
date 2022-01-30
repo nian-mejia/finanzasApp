@@ -60,6 +60,23 @@ Future<List<Record>> getRecords() async{
   return responseRecords;
 }
 
+Future<List<Record>> getRecordsByAccount(int accountID) async{
+  List<Record> responseRecords = [];
+  final last30Days = getDateFormated(DateTime.now()
+    .add(const Duration(days: -30)).toString());
+
+  Database db = await  DBProvider.db.database;
+  List<Map<String, Object?>> records =  await 
+    db.query("records", 
+    where: "date >= date(?) and account_origin_id=?", 
+    whereArgs: [last30Days, accountID], 
+    orderBy: "date desc, id desc");
+  for (var element in records) {
+    responseRecords.add(recordfromJSon(element));
+  }
+  return responseRecords;
+}
+
 Map<String, Color>  colorsRecord = {
   "ingreso": Colors.green,
   "gasto": Colors.red,
